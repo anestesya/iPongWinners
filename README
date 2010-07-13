@@ -1,10 +1,10 @@
-#Objetivo: Esta é uma webapp desenvolvida para um pequeno campeonato em nossa empresa
-#Empresa: Guenka Software - www.guenka.com/br/
-#Autor: Tadeu Luis P. Gaudio
+# Objetivo: Esta é uma webapp desenvolvida para um pequeno campeonato em nossa empresa
+# Empresa: Guenka Software - www.guenka.com/br/
+# Autor: Tadeu Luis P. Gaudio
 
-#para poder usar esse projeto você deve instalar o Ruby e Sinatra. Além de ter um iPhone ou iPod Touch,
-#esse programa pode ser acessado via navegador, mas devido aos recursos de CSS3 
-#o único navegador que suporta todos os recuros de animações éo navegador WebKit
+# para poder usar esse projeto você deve instalar o Ruby e Sinatra. Além de ter um iPhone ou iPod Touch,
+# esse programa pode ser acessado via navegador, mas devido aos recursos de CSS3 
+# o único navegador que suporta todos os recuros de animações éo navegador WebKit
 
-#Maiores informações sobre como configurar seu ambiente de desenvolvimento com Ruby e Sinatra, acesse o link abaixo.
-#  http://anestesya.posterous.com/como-instalar-ruby-com-suporte-ao-sinatra-e-t
+# Maiores informações sobre como configurar seu ambiente de desenvolvimento com Ruby e Sinatra, acesse o link abaixo.
+#   http://anestesya.posterous.com/como-instalar-ruby-com-suporte-ao-sinatra-e-t
