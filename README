@@ -1,6 +1,7 @@
 # Objetivo: Esta é uma webapp desenvolvida para um pequeno campeonato em nossa empresa
 # Empresa: Guenka Software - www.guenka.com/br/
-# Autor: Tadeu Luis P. Gaudio
+# Autor: Tadeu Luis P. Gaudio 
+#TWITTER: http://twitter.com/anestesya
 
 # para poder usar esse projeto você deve instalar o Ruby e Sinatra. Além de ter um iPhone ou iPod Touch,
 # esse programa pode ser acessado via navegador, mas devido aos recursos de CSS3 
