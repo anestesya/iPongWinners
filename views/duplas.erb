@@ -1,12 +1,10 @@
 <div id="tabela">
-	<h2>Tabela de Resultados <%= @camp %></h2>
+	<h2>Tabela de Resultados <%= $camp %></h2>
 	
 	<ul>
-		<li><%= @jogadorA %></li>
-		<li class="r"><%= @resultA%></li>
-		<li>x</li>
-		<li class="r"><%= @resultB%></li>
-		<li><%= @jogadorB %></li>
+	  <% @duplas.each do |time| %>
+		<li><%= time %></li>
+	  <%end%>
 	</ul>
 	
 </div>

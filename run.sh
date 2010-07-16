@@ -6,7 +6,7 @@ HOST=0.0.0.0
 PORT=3001
 FILE='main.rb'
  
-   if[ -f $FILE ]; 
+   if [ -f $FILE ]; 
     then
      /usr/bin/shotgun -p $PORT -o $HOST $FILE
    fi
