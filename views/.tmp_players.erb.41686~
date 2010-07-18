@@ -1,0 +1,7 @@
+gor<div class="panel" title="Jogadores">
+	<ul>
+		<% $jogadores.each do |jogador| %>
+     		<li> <%= jogador %></li>
+		<% end %>
+	</ul>
+</div>

@@ -8,6 +8,8 @@ FILE='main.rb'
  
    if [ -f $FILE ]; 
     then
+      /sbin/ifconfig -a | grep 'inet'; 
      /usr/bin/shotgun -p $PORT -o $HOST $FILE
+
    fi
  
