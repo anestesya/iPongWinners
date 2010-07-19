@@ -25,7 +25,6 @@ end
 #página de duplas
 get '/duplas' do 
     
-    
     @duplas = Array.new(8)
     
     (0..9).each do |i| 
@@ -47,6 +46,14 @@ end
 
 #mostra pontuação para as duplas
 get '/score_duplas' do
+   @duplas = Array.new(8)
+    
+    (0..9).each do |i| 
+      if i+1 == 10 
+        i= 9
+      end
+      @duplas[i] = [$jogadores[i], $jogadores[i+1]]
+    end
   erb :score_duplas
 end
 

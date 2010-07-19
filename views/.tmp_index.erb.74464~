@@ -1,5 +1,4 @@
-<div id="opcoes"  class="painel">
-	<h1>Opções de jogo</h1>
+<div id="opcoes">
 	<ul>
 		<li><a href="/players" title="">Jogadores</a></li>
 		<li><a href="/duplas" title="">Duplas</a></li>
