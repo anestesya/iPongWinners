@@ -1,0 +1,11 @@
+Exemplo do site:
+
+curl -u o_clockr:1n0d3_50t -d status=Check%20out%20@twitterapi%27s%20new%20developer%20portal%21&annotations=%5B%7B%22website%22%3A%7B%22url%22%3A%22http%3A//anestesya.posterous.com%22%7D%7D%5D https://api.twitter.com/1/statuses/update.json
+
+
+curl -u o_clockr:1n0d3_50t -d status="Check out @twitterapi's new developer portal!&annotations=[{"website":{"url":"http://anestesya.posterous.com"}}]" https://api.twitter.com/1/statuses/update.json
+
+
+curl -u o_clockr:1n0d3_50t http://api.twitter.com/1/statuses/user_timeline.xml?page=3
+
+curl -u o_clockr:1n0d3_50t -d "status=Tweet with annotations!&annotations=movie:title=Terminator2&url=http://www.imdb.com/title/tt0103064/"

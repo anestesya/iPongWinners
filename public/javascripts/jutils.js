@@ -37,13 +37,26 @@ jQuery(function($){
 							  '<p id="tempo"></p>'+
 				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
 							  '<span class="marcador">X</span>'+
-							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0 </span>'+jogador[1]+'</span></p>',
+							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0 </span>'+jogador[1]+'</span></p>'+
+							  '<span id="fim_partida">acabou</span>',
 				  tpl_p_fim = '</div>';
 				  
 				
 				$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
 				mostraHora('#tempo');
 				
+				/* Clica no botão de terminar a partida 
+				 *e envia os dados para o ruby
+				 */
+				 $('.fim_partida').click(function(){
+				 
+				 	$.ajax({
+						url: '/score_single'
+						type: 'POST'	
+				 	});
+				 	return false;
+				 });
+				 
 					
 				/* Atualiza pontuação da partida corrente
 				 * Clique no resultado para alterá-lo

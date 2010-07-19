@@ -7,8 +7,8 @@ require 'sinatra'
 require 'twitter'
 
 #variável global com os jogadores
-$jogadores = ['tadeu', 'daniel', 'mateus', 'brahim', 'heber', 'renan', 'bruno', 'laerte',
-               'jandira', 'gledston', 'cris', 'pedro', 'alessandro', 'Helder', 'joao paulo'];
+$jogadores = ['tadeu', 'gustavo', 'daniel', 'mateus', 'brahim', 'heber', 'renan', 'bruno', 'laerte',
+               'jandira', 'david', 'gledston', 'cris', 'pedro', 'alessandro', 'Helder', 'joao paulo'];
 #nome do campeonato
 $camp = 'Ping Pong - Guenka Software'
 
@@ -27,14 +27,14 @@ get '/duplas' do
     
     @duplas = Array.new(8)
     
-    (0..9).each do |i| 
-      if i+1 == 10 
-        i= 9
+    (0..10).each do |i| 
+      if i+1 == 11 
+        i= 10
       end
       @duplas[i] = [$jogadores[i], $jogadores[i+1]]
     end
  
-    @jogadorA = $jogadores[rand(8)]; @jogadorB = $jogadores[rand(8)]
+    @jogadorA = $jogadores[rand(9)]; @jogadorB = $jogadores[rand(9)]
     @resultA = @resultB = 0
     erb :duplas  
 end
