@@ -1,4 +1,9 @@
 jQuery(function($){
+	
+	
+	/* Quando clicar em 2 participantes uma nova tela de 
+	 * partida é gerada
+	 */
 	var oponentes = 0, jogador = new Array(2);
 	$('#um_contra_um ul li').click(function(){
 		 var $this = $(this);
@@ -44,18 +49,30 @@ jQuery(function($){
 			      tpl_p_ini = '<div id="partida">'+
 				  			  '<h2>Partida</h2>'+
 							  '<p id="tempo"></p>'+
-				       		  '<span id="'+jogador[0]+'">'+jogador[0]+'</span> <span class="pontos">0</span>'+
+				       		  '<span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
 							  ' X '+
-							  '<span class="pontos2">0</span>'+' <span id="'+jogador[1]+'">'+jogador[1]+'</span>',
+							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0 </span>'+jogador[1]+'</span>',
 				  tpl_p_fim = '</div>';
 				  
 				
 				$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
 				mostraHora();
+				
+					
+				/* Atualiza pontuação da partida corrente
+				 * Clique no resultado para alterá-lo
+				 */
+				$('.jogador').click(function(){
+					var ponto = $(this).children().text();
+					ponto = parseInt(ponto);
+					ponto++;
+					$(this).children().html(ponto);
+				});//fim da função que atualiza a pontução.
+				
 		 }
 		 
 		 
-		 
 		return false;
-	});
+	});//fim da função que gera a tela da partida.
+
 });
