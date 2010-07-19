@@ -1,7 +1,7 @@
 <div id="tabela">
 	<h2>Tabela de Resultados <%= $camp %></h2>
 	
-	<ul class="duplas">
+	<ul>
 	  <% @duplas.each do |time| %>
 		<li><%= time %></li>
 	  <%end%>
