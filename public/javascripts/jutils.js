@@ -1,6 +1,5 @@
 jQuery(function($){
 	
-	
 	/* Quando clicar em 2 participantes uma nova tela de 
 	 * partida é gerada
 	 */
@@ -10,7 +9,6 @@ jQuery(function($){
 		 var nome_jogador = $this.text(), cor; 
 		  
 		 jogador[oponentes] =  nome_jogador;
-		 console.log(jogador)
 		 if(oponentes == 0){
 		 	cor= 'green';
 			oponentes++;
@@ -47,6 +45,7 @@ jQuery(function($){
 			 /* HTML da partida apartir da seleção dos oponentes */
 			 var tpl_partida = '',
 			      tpl_p_ini = '<div id="partida">'+
+				  			  '<h1><a href="/single">Voltar</a></h1>'+
 				  			  '<h2>Partida</h2>'+
 							  '<p id="tempo"></p>'+
 				       		  '<span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
@@ -69,9 +68,8 @@ jQuery(function($){
 					$(this).children().html(ponto);
 				});//fim da função que atualiza a pontução.
 				
-		 }
-		 
-		 
+		 }//fim do teste que monta janela de partida
+			 
 		return false;
 	});//fim da função que gera a tela da partida.
 
