@@ -5,12 +5,30 @@
 require 'rubygems'
 require 'sinatra'
 require 'twitter'
+require 'active_record'
 
 #variável global com os jogadores
 $jogadores = ['tadeu', 'gustavo', 'daniel', 'mateus', 'brahim', 'heber', 'renan', 'bruno', 'laerte',
                'jandira', 'david', 'gledston', 'cris', 'pedro', 'alessandro', 'Helder', 'joao paulo'];
 #nome do campeonato
 $camp = 'Ping Pong - Guenka Software'
+
+
+connection = ActiveRecord::Base.establish_connection(
+    :adapter  => 'mysql',
+    :host     => 'localhost',
+    :username => 'root',
+    :password => 'guenka',
+    :database => 'ping-pong'
+)
+
+class Jogador < ActiveRecord::Base
+  set_table_name :jogadores
+end
+
+get '/jogadores' do
+  Jogador.all.map{|j| "Jogador #{j.id}: #{j.nome}"}.join("<br>")
+end
 
 #página index.
 get '/' do
