@@ -47,7 +47,6 @@ end
 #mostra pontuação para as duplas
 get '/score_duplas' do
    @duplas = Array.new(8)
-    
     (0..9).each do |i| 
       if i+1 == 10 
         i= 9
@@ -63,5 +62,5 @@ get '/score_single/' do
 end
 
 post '/score_single' do
-  p "Parametros: #{params[:pontos]}"
+  p "Parametros: #{params[:jogador_a]} X #{params[:jogador_b]} Tempo da partida: #{params[:tempo]}"
 end

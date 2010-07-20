@@ -32,12 +32,12 @@ jQuery(function($){
 			 var tpl_partida = '',
 			      tpl_p_ini = '<div id="partida">'+
 				  			  '<h1><a href="/single">Voltar</a></h1>'+
-				  			  '<h2>Partida</h2>'+
+				  			  '<h2><span class="set">1</span> SET</h2>'+
 							  '<p id="tempo"></p>'+
 				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
 							  '<span class="marcador">X</span>'+
-							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0 </span>'+jogador[1]+'</span></p>'+
-							  '<span id="fim_partida">acabou</span>',
+							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0</span>'+jogador[1]+'</span></p>'+
+							  '<span id="novo_set">novo set</span><span id="fim_partida">acabou</span>',
 				  tpl_p_fim = '</div>';
 				
 				$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
@@ -46,8 +46,8 @@ jQuery(function($){
 				/* Clica no botão de terminar a partida 
 				 *e envia os dados para o ruby
 				 */
-				 $('#fim_partida').click(function(){
-				 	var pontos = new Array(2);
+				 $('#novo_set, #fim_partida').click(function(){
+				 	var pontos = new Array(2), contador = $('.set').text();
 				    $('.pontos').each(function(i){
 					   pontos[i] = parseInt($(this).text());
 					});
@@ -55,15 +55,23 @@ jQuery(function($){
 					$.ajax({
 						url: '/score_single',
 						type: 'POST',
-						data: pontos,
+						data: 'jogador_a='+pontos[0]+'&jogador_b='+pontos[1]+'&tempo='+$('#tempo').text(),
 						success: function(){
-							console.log('Os pontos: '+pontos);
+								contador = parseInt(contador)+1;
+								$('.pontos').text('0');
+								$('.set').text(contador)
+								mostraHora('#tempo');
 						}
 					});//fim do ajax
-				 	return false;
+					
+					if($(this).is('#fim_partida')){
+						window.location.href = "/"
+						return false;
+					}else{
+					 	return false;
+					}
 				 });
 				 
-					
 				/* Atualiza pontuação da partida corrente
 				 * Clique no resultado para alterá-lo
 				 */
@@ -106,7 +114,7 @@ function sw_start(){
 	timestart   = new Date();
 	document.timeform.timetextarea.value = "00:00";
 	document.timeform.laptime.value = "";
-	timercount  = setTimeout("mostraHora()", 1000);
+	timercount  = setTimeout("mostraHora('#tempo')", 1000);
 	}
 	else{
 	var timeend = new Date();
