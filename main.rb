@@ -58,6 +58,10 @@ get '/score_duplas' do
 end
 
 #mostra pontuação para o um contra um 
-get '/score_single' do
+get '/score_single/' do
   erb :score_single
+end
+
+post '/score_single' do
+  p "Parametros: #{params[:pontos]}"
 end

@@ -17,7 +17,6 @@ jQuery(function($){
 			oponentes++; console.log(oponentes)
 		 }
 		 
-		 		 
 		 if( !($this.attr('class') == nome_jogador) ){
 			$this.css({
 		 	 '-webkit-transition': 'background 1s linear',
@@ -40,7 +39,6 @@ jQuery(function($){
 							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0 </span>'+jogador[1]+'</span></p>'+
 							  '<span id="fim_partida">acabou</span>',
 				  tpl_p_fim = '</div>';
-				  
 				
 				$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
 				mostraHora('#tempo');
@@ -48,12 +46,20 @@ jQuery(function($){
 				/* Clica no botão de terminar a partida 
 				 *e envia os dados para o ruby
 				 */
-				 $('.fim_partida').click(function(){
-				 
-				 	$.ajax({
-						url: '/score_single'
-						type: 'POST'	
-				 	});
+				 $('#fim_partida').click(function(){
+				 	var pontos = new Array(2);
+				    $('.pontos').each(function(i){
+					   pontos[i] = parseInt($(this).text());
+					});
+					
+					$.ajax({
+						url: '/score_single',
+						type: 'POST',
+						data: pontos,
+						success: function(){
+							console.log('Os pontos: '+pontos);
+						}
+					});//fim do ajax
 				 	return false;
 				 });
 				 

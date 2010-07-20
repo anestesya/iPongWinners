@@ -13,7 +13,7 @@ h1 {
 }
 h1 a {color:white !important; text-shadow:1px 1px 1px black !important;}
 h1 a:visited, h1 a:link {color:white !important; text-shadow:1px 1px 1px black !important;}
-h2 {color:black; font-size:1.5em; text-shadow:1px 1px 1px blue; width:100%; text-align:center;}
+h2 {color:black; font-size:1.5em; margin-top:0.8em; text-shadow:1px 1px 1px blue; width:100%; text-align:center;}
 
 ul {clear:both; list-style-type:none; margin:0 auto; width:100%; position:relative; z-index:1;}
 li {
@@ -39,7 +39,7 @@ li a, h1 a {display:block; width:100%; text-decoration:none; color:black !import
 .pontos {margin:0;}
 #jogo {width:100%; clear:both; font-size:1.7em;}
 .marcador {float:left; display:block; margin-left:15%;}
-.fim_partida {display:block; clear:both; background-color:red; color:white; text-shadow:1px 1px 1px black;}
+#fim_partida {display:block; width:100%; clear:both; background-color:red; color:white; text-shadow:1px 1px 1px black;}
 
 
 /*scores*/
