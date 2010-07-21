@@ -47,7 +47,7 @@ jQuery(function($){
 				 *e envia os dados para o ruby
 				 */
 				 $('#novo_set, #fim_partida').click(function(){
-				 	var pontos = new Array(2), contador = $('.set').text();
+				 	var pontos = new Array(2), set = $('.set').text();
 				    $('.pontos').each(function(i){
 					   pontos[i] = parseInt($(this).text());
 					});
@@ -55,11 +55,11 @@ jQuery(function($){
 					$.ajax({
 						url: '/score_single',
 						type: 'POST',
-						data: 'jogador_a='+pontos[0]+'&jogador_b='+pontos[1]+'&tempo='+$('#tempo').text(),
+						data: 'set='+set+'&jogador_a='+pontos[0]+'&jogador_b='+pontos[1]+'&tempo='+$('#tempo').text(),
 						success: function(){
-								contador = parseInt(contador)+1;
+								set = parseInt(set)+1;
 								$('.pontos').text('0');
-								$('.set').text(contador)
+								$('.set').text(set)
 								mostraHora('#tempo');
 						}
 					});//fim do ajax

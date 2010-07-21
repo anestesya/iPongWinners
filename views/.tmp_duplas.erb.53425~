@@ -1,0 +1,8 @@
+<div id="tabela" class="painel painel">
+ 	<h1><a href="/">Voltar</a></h1>
+	<ul class="duplas">
+	  <% @duplas.each do |time| %>
+		<li><%= time[0] %> <%= time[1] %> </li>
+	  <%end%>
+	</ul>
+</div>
