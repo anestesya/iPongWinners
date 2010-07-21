@@ -12,6 +12,7 @@ $jogadores = ['tadeu', 'gustavo', 'daniel', 'mateus', 'brahim', 'heber', 'renan'
                'jandira', 'david', 'gledston', 'cris', 'pedro', 'alessandro', 'Helder', 'joao paulo'];
 #nome do campeonato
 $camp = 'Ping Pong - Guenka Software'
+$partida = {}
 
 
 connection = ActiveRecord::Base.establish_connection(
@@ -81,4 +82,11 @@ end
 
 post '/score_single' do
   p "Parametros: #{params[:jogador_a]} X #{params[:jogador_b]} Tempo da partida: #{params[:tempo]}"
+  $partida = {
+    'set' => params[:set],
+    'tempo' => params[:tempo],
+    'pnt_jogador_a' => params[:jogador_a],
+    'pnt_jogador_b' => params[:jogador_b]
+  }
+  
 end
