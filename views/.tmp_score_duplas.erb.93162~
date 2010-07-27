@@ -1,8 +1,0 @@
-<div id="score_duplas" class="painel">
-	<h1><a href="/">Voltar</a></h1>
-	<ul>
-		<% @duplas.each do |time| %>
-     		<li><span class="player_"><%= time[0] %> <%= time[1] %></span><span class="score">0</span></li>
-		<% end %>
-	</ul>
-</div>

@@ -58,30 +58,51 @@ jQuery(function($){
 				 *e envia os dados para o ruby
 				 */
 				 $('#novo_set, #fim_partida').click(function(){
-				 	var pontos = new Array(2), set = $('.set').text();
-				    $('.pontos').each(function(i){
-					   pontos[i] = parseInt($(this).text());
-					});
-					
-					$.ajax({
-						url: '/score_single',
-						type: 'POST',
-						data: 'set='+set+'&jogador_a='+pontos[0]+'&jogador_b='+pontos[1]+'&tempo='+$('#tempo').text(),
-						success: function(){
-								set = parseInt(set)+1;
-								$('.pontos').text('0');
-								$('.set').text(set)
-								mostraHora('#tempo');
-						}
-					});//fim do ajax
-					
-					if($(this).is('#fim_partida')){
-						window.location.href = "/"
-						return false;
-					}else{
-					 	return false;
-					}
-				 });
+					 	var $this = $(this), vencedor, jogador = new Array(2);
+					 	var bt = $this.attr('id'), pontos = new Array(2), set = $('.set').text(), url_score = $('h1 a').attr('href');
+					    
+						//jogadores
+						jogador[0] =  $('#jogo').find('.jogador:eq(0)').text();
+						jogador[1] =  $('#jogo').find('.jogador:eq(1)').text();
+						console.log(jogador[0] + ""+ jogador[1] );
+						//pontos
+						$('.pontos').each(function(i){ pontos[i] = parseInt($(this).text()); });
+						
+						//verifica o tipo da partida para enviar os dados para a tabela certa.					
+						if(url_score == '/'){ url_score = '/score_single';}
+						else {url_score = '/score_duplas';}
+						
+							//envia os dados direto para o bd.
+							if(pontos[0] > pontos[1]){
+								vencedor = jogador[0];
+							}else {vencedor = jogador[1];}
+							
+						if(bt == "fim_partida"){
+							$.ajax({
+								url: url_score,
+								type: 'POST',
+								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
+								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1],
+								success: function(){window.location.href = "/"} //volta para a página index do programa.
+							});//fim do ajax
+						}else{
+							//a partida continua e os dados são apenas armazenados.
+							$.ajax({
+								url: url_score,
+								type: 'POST',
+								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
+								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1],
+								success: function(){
+										set = parseInt(set)+1;
+										$('.pontos').text('0');
+										$('.set').text(set);
+										mostraHora('#tempo');
+								}
+						    });//fim do ajax
+						    return false;
+					   	}//fim dos testes
+				   });//fim do evento de clique nos botões "novo set" & "fim_partida"
+
 				 
 				/* Atualiza pontuação da partida corrente
 				 * Clique no resultado para alterá-lo
