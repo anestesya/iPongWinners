@@ -4,20 +4,22 @@ jQuery(function($){
 	 * partida é gerada
 	 */
 	var oponentes = 0, jogador = new Array(2);
-	$('#um_contra_um ul li').click(function(){
-		 var $this = $(this);
-		 var nome_jogador = $this.text(), cor; 
-		  
+	$('#um_contra_um ul li, .duplas li').click(function(){
+		 var $this = $(this), cor; 
+		 var nome_jogador = $this.text(), jogador_selecionado = $this.attr('class'), tipo_partida = $this.parent().attr('class'); 
+		 
+		 //colore os jogadores da partida. 
 		 jogador[oponentes] =  nome_jogador;
 		 if(oponentes == 0){
 		 	cor= 'green';
 			oponentes++;
 		 }else if(oponentes > 0 && oponentes < 2 ){
 		 	cor = 'blue'; 
-			oponentes++; console.log(oponentes)
+			oponentes++;
 		 }
 		 
-		 if( !($this.attr('class') == nome_jogador) ){
+		 //verifica se o jogador não foi selecionado e marca ele para jogar.
+		 if( !(jogador_selecionado == nome_jogador) ){
 			$this.css({
 		 	 '-webkit-transition': 'background 1s linear',
 			 background: cor,
@@ -26,12 +28,15 @@ jQuery(function($){
 		 	});
 		 }
 		 
+		 //se os dois jogadores foram selecionados gera o html para a partida.
 		 if(oponentes == 2 ){
-
 			 /* HTML da partida apartir da seleção dos oponentes */
+			
+			var container = "" || tipo_partida;
+			
 			 var tpl_partida = '',
 			      tpl_p_ini = '<div id="partida">'+
-				  			  '<h1><a href="/single">Voltar</a></h1>'+
+				  			  '<h1><a href="/'+tipo_partida+'">Voltar</a></h1>'+
 				  			  '<h2><span class="set">1</span> SET</h2>'+
 							  '<p id="tempo"></p>'+
 				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
@@ -39,9 +44,15 @@ jQuery(function($){
 							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0</span>'+jogador[1]+'</span></p>'+
 							  '<span id="novo_set">novo set</span><span id="fim_partida">acabou</span>',
 				  tpl_p_fim = '</div>';
+			    
+				if(container != 'duplas'){
+					$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
+				     mostraHora('#tempo');
+				}else{
+					$('#tabela').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
+					mostraHora('#tempo')
+				}
 				
-				$('#um_contra_um').html(tpl_partida + tpl_p_ini +tpl_p_fim).fadeIn('fast');
-				mostraHora('#tempo');
 				
 				/* Clica no botão de terminar a partida 
 				 *e envia os dados para o ruby

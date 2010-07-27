@@ -5,31 +5,38 @@
 require 'rubygems'
 require 'sinatra'
 require 'twitter'
-require 'active_record'
+#require 'active_record'
 
-#variável global com os jogadores
-$jogadores = ['tadeu', 'gustavo', 'daniel', 'mateus', 'brahim', 'heber', 'renan', 'bruno', 'laerte',
-               'jandira', 'david', 'gledston', 'cris', 'pedro', 'alessandro', 'Helder', 'joao paulo'];
 #nome do campeonato
 $camp = 'Ping Pong - Guenka Software'
+
+#variável global com os jogadores
+$jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 'Helder Belan', 'Heber Nascimento', 'Alessandro Almeida',
+'Fernando Luizão','Daniel Luvizotto', 'Gledston Santana', 'David Renó','Chris Andrew','Laerte Zaccarelli','Pedro Nogueira','Tadeu Gaudio',
+'João Paulo', 'Renan Barbosa','Jandira Guenka Palma'];
+
+$duplas_grupoA = ['DANIEL & TADEU', 'RENAN & DAVID', 'HEBER & LAERTE', 'LUIZ GUSTAVO & CHRIS'];
+$duplas_grupoB = ['MATEUS & JOÃO PAULO', 'BRAHIM & BRUNO', 'HELDER & LUIZÃO', 'GLEDSTON & ALESSANDRO'];
+
+#partidas
 $partida = {}
 
 
-connection = ActiveRecord::Base.establish_connection(
-    :adapter  => 'mysql',
-    :host     => 'localhost',
-    :username => 'root',
-    :password => 'guenka',
-    :database => 'ping-pong'
-)
+#connection = ActiveRecord::Base.establish_connection(
+#    :adapter  => 'mysql',
+#    :host     => 'localhost',
+#    :username => 'root',
+#    :password => 'guenka',
+#    :database => 'ping-pong'
+#)
 
-class Jogador < ActiveRecord::Base
-  set_table_name :jogadores
-end
+#class Jogador < ActiveRecord::Base
+#  set_table_name :jogadores
+#end
 
-get '/jogadores' do
-  Jogador.all.map{|j| "Jogador #{j.id}: #{j.nome}"}.join("<br>")
-end
+#get '/jogadores' do
+#  Jogador.all.map{|j| "Jogador #{j.id}: #{j.nome}"}.join("<br>")
+#end
 
 #página index.
 get '/' do
@@ -43,17 +50,7 @@ end
 
 #página de duplas
 get '/duplas' do 
-    
-    @duplas = Array.new(8)
-    
-    (0..10).each do |i| 
-      if i+1 == 11 
-        i= 10
-      end
-      @duplas[i] = [$jogadores[i], $jogadores[i+1]]
-    end
- 
-    @jogadorA = $jogadores[rand(9)]; @jogadorB = $jogadores[rand(9)]
+    @duplas = $duplas_grupoA + $duplas_grupoB
     @resultA = @resultB = 0
     erb :duplas  
 end
@@ -65,23 +62,18 @@ end
 
 #mostra pontuação para as duplas
 get '/score_duplas' do
-   @duplas = Array.new(8)
-    (0..9).each do |i| 
-      if i+1 == 10 
-        i= 9
-      end
-      @duplas[i] = [$jogadores[i], $jogadores[i+1]]
-    end
+  @duplas = $duplas_grupoA + $duplas_grupoB
   erb :score_duplas
 end
 
 #mostra pontuação para o um contra um 
-get '/score_single/' do
+get '/score_single' do
   erb :score_single
 end
 
 post '/score_single' do
   p "Parametros: #{params[:jogador_a]} X #{params[:jogador_b]} Tempo da partida: #{params[:tempo]}"
+ 
   $partida = {
     'set' => params[:set],
     'tempo' => params[:tempo],
