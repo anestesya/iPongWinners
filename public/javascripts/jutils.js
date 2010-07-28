@@ -1,5 +1,4 @@
 jQuery(function($){
-	
 	/* Quando clicar em 2 participantes uma nova tela de 
 	 * partida é gerada
 	 */
@@ -39,7 +38,7 @@ jQuery(function($){
 				  			  '<h1><a href="/'+tipo_partida+'">Voltar</a></h1>'+
 				  			  '<h2><span class="set">1</span> SET</h2>'+
 							  '<p id="tempo"></p>'+
-				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+' <span class="pontos">0</span></span>'+
+				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+'<span class="pontos">0</span></span>'+
 							  '<span class="marcador">X</span>'+
 							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0</span>'+jogador[1]+'</span></p>'+
 							  '<span id="novo_set">novo set</span><span id="fim_partida">acabou</span>',
@@ -64,7 +63,7 @@ jQuery(function($){
 						//jogadores
 						jogador[0] =  $('#jogo').find('.jogador:eq(0)').text();
 						jogador[1] =  $('#jogo').find('.jogador:eq(1)').text();
-						console.log(jogador[0] + ""+ jogador[1] );
+						console.log(jogador[0] + " : "+ jogador[1] );
 						//pontos
 						$('.pontos').each(function(i){ pontos[i] = parseInt($(this).text()); });
 						

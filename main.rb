@@ -5,7 +5,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'twitter'
-#require 'active_record'
+#require 'active_record'  
 
 #nome do campeonato
 $camp = 'Ping Pong - Guenka Software'
