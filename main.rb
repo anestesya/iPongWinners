@@ -4,13 +4,10 @@
 
 require 'rubygems'
 require 'sinatra'
-require 'twitter'
-#require 'active_record'  
-
-#nome do campeonato
-$camp = 'Ping Pong - Guenka Software'
+require 'jogadores'
 
 #variável global com os jogadores
+$ARQUIVO = 'public/files/participantes.xml'
 $jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 'Helder Belan', 'Heber Nascimento', 'Alessandro Almeida',
 'Fernando Luizão','Daniel Luvizotto', 'Gledston Santana', 'David Renó','Chris Andrew','Laerte Zaccarelli','Pedro Nogueira','Tadeu Gaudio',
 'João Paulo', 'Renan Barbosa','Jandira Guenka Palma'];
@@ -18,30 +15,11 @@ $jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 
 $duplas_grupoA = ['DANIEL/TADEU', 'RENAN/DAVID', 'HEBER/LAERTE', 'LUIZ GUSTAVO/CHRIS'];
 $duplas_grupoB = ['MATEUS/JOÃO PAULO', 'BRAHIM/BRUNO', 'HELDER/LUIZÃO', 'GLEDSTON/ALESSANDRO'];
 
-#partidas
-$partida = {}
-
-
-
-#connection = ActiveRecord::Base.establish_connection(
-#    :adapter  => 'mysql',
-#    :host     => 'localhost',
-#    :username => 'root',
-#    :password => 'guenka',
-#    :database => 'ping-pong'
-#)
-
-#class Jogador < ActiveRecord::Base
-#  set_table_name :jogadores
-#end
-
-#get '/jogadores' do
-#  Jogador.all.map{|j| "Jogador #{j.id}: #{j.nome}"}.join("<br>")
-#end
-
 #HOME #############################################################
 #página index.
 get '/' do
+  jogadores = Jogadores.new($ARQUIVO)
+  p "Os jogadores deste Campeonato são: #{jogadores.add_jogadores($jogadores)}"
   erb :index
 end
 
