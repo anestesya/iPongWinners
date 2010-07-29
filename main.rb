@@ -1,4 +1,5 @@
-#programa feito para meu ipod
+#Feito para ser usado com iPhone/iPad, Android ou Palm-pre... ou qualquer
+#dispositivo que tenha acesso web.
 #ele vai armazenar os resultados do Campeonato de Ping Pong da Guenka
 #autor: anesteysa@gmail.com
 
@@ -7,7 +8,8 @@ require 'sinatra'
 require 'jogadores'
 
 #variável global com os jogadores
-$ARQUIVO = "public/files/participantes.xml"
+DIR_XML_FILES = "public/files/xml"
+
 $jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 'Helder Belan', 'Heber Nascimento', 'Alessandro Almeida',
 'Fernando Luizão','Daniel Luvizotto', 'Gledston Santana', 'David Renó','Chris Andrew','Laerte Zaccarelli','Pedro Nogueira','Tadeu Gaudio',
 'João Paulo', 'Renan Barbosa','Jandira Guenka Palma'];
@@ -18,9 +20,15 @@ $duplas_grupoB = ['MATEUS/JOÃO PAULO', 'BRAHIM/BRUNO', 'HELDER/LUIZÃO', 'GLEDS
 #HOME #############################################################
 #página index.
 get '/' do
-  jogadores = Jogadores.new($ARQUIVO)
-  p "Os jogadores deste Campeonato são: #{jogadores.add_jogadores($jogadores)}"
-  erb :index
+  jogadores = Jogadores.new DIR_XML_FILES+"participantes.xml"
+  duplas_a = Jogadores.new DIR_XML_FILES+"duplas_grupoA.xml"
+  duplas_b = Jogadores.new DIR_XML_FILES+"duplas_grupoB.xml" 
+
+  jogadores.add_jogadores $jogadores
+  duplas_a.add_jogadores $duplas_grupoA
+  duplas_b.add_jogadores $duplas_grupoB
+ 
+ erb :index
 end
 
 #JOGADORES #######################################################
