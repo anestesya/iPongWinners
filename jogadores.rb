@@ -7,26 +7,22 @@ require 'rexml/document'
 include REXML
 
 class Jogadores
+  #variáveis que são passadas pelos objetos.
+  @@doc = ""
+    
   #recebe o endereço do arquivo XML para ser tratado.  
   def initialize(arquivo_xml)
      @arquivo_xml = arquivo_xml
-     #abre o arquivo especificado pelo usuário
-     file = File.new(@arquivo_xml)
-     @doc = Document.new(file) #gera um documento XML do arquivo
-     p "Documento: #{@doc} " 
-     @a = "foda-se"
-     p @a
+     @@doc = Document.new File.new @arquivo_xml
   end
   
  ##adiciona os jogadores em um arquivo XML caso receba um vetor com os nomes.
  def add_jogadores(jogadores)
-   @@jogadores = Array.new(jogadores)
-  
+   @jogadores = Array.new(jogadores)
    #insere os jogadores no arquivo XML de participantes
-   @@jogadores.each  do |jogador|
-     @doc.root.add_element('jogador', {"nome", jogador})
+   @jogadores.each  do |jogador|
+     @@doc.root.add_element('jogador', {"nome", jogador})
   end
-   p @a  
  end
  
   #pega os participantes que estão em um arquivo XML 

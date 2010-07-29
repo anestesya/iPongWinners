@@ -7,7 +7,7 @@ require 'sinatra'
 require 'jogadores'
 
 #variável global com os jogadores
-$ARQUIVO = 'public/files/participantes.xml'
+$ARQUIVO = "public/files/participantes.xml"
 $jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 'Helder Belan', 'Heber Nascimento', 'Alessandro Almeida',
 'Fernando Luizão','Daniel Luvizotto', 'Gledston Santana', 'David Renó','Chris Andrew','Laerte Zaccarelli','Pedro Nogueira','Tadeu Gaudio',
 'João Paulo', 'Renan Barbosa','Jandira Guenka Palma'];
