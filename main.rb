@@ -10,25 +10,12 @@ require 'jogadores'
 #variável global com os jogadores
 DIR_XML_FILES = "public/files/xml/"
 
-$jogadores = [ 'Luiz Gustavo', 'Brahim Neto', 'Mateus Balconi', 'Bruno Yamada', 'Helder Belan', 'Heber Nascimento', 'Alessandro Almeida',
-'Fernando Luizão','Daniel Luvizotto', 'Gledston Santana', 'David Renó','Chris Andrew','Laerte Zaccarelli','Pedro Nogueira','Tadeu Gaudio',
-'João Paulo', 'Renan Barbosa','Jandira Guenka Palma'];
-
-$duplas_grupoA = ['DANIEL/TADEU', 'RENAN/DAVID', 'HEBER/LAERTE', 'LUIZ GUSTAVO/CHRIS'];
-$duplas_grupoB = ['MATEUS/JOÃO PAULO', 'BRAHIM/BRUNO', 'HELDER/LUIZÃO', 'GLEDSTON/ALESSANDRO'];
-
 #HOME #############################################################
 #página index.
 get '/' do
   jogadores = Jogadores.new DIR_XML_FILES+"participantes.xml"
-  duplas_a = Jogadores.new DIR_XML_FILES+"duplas_grupoA.xml"
-  duplas_b = Jogadores.new DIR_XML_FILES+"duplas_grupoB.xml" 
-
-  jogadores.add_jogadores $jogadores
-  #duplas_a.add_jogadores $duplas_grupoA
-  #duplas_b.add_jogadores $duplas_grupoB
- 
- erb :index
+  jogadores.get_participantes
+  erb :index
 end
 
 #JOGADORES #######################################################

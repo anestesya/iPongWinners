@@ -7,13 +7,10 @@ require 'rexml/document'
 include REXML 
 
 class Jogadores
-  #variáveis que são passadas pelos objetos.
-  @@doc = ""
-    
   #inicializa a classe para criar os arquivos. 
   def initialize(arquivo_xml)
      @arquivo_xml = arquivo_xml 
-     @@doc = abre_arquivo @arquivo_xml
+     @doc = abre_arquivo @arquivo_xml
   end #fim da initialize
   
    #método para abrir ou criar arquivos
@@ -37,17 +34,15 @@ class Jogadores
     end
     file
   end #fim do método abre arquivo
-  
-     
    
  ##adiciona os jogadores em um arquivo XML caso receba um vetor com os nomes.
  def add_jogadores(jogadores)
    @jogadores = Array.new(jogadores)
-   root = @@doc.root; @i=0;
+   root = @doc.root; @i=0;
    #testa par saber se existe a raiz dos participantes.   
    if root == nil then
-     @@doc.add_element('jogadores', {"dirpontos" => "public/files/xml/pontos.xml"})
-     root = @@doc.root
+     @doc.add_element('jogadores', {"dirpontos" => "public/files/xml/pontos.xml"})
+     root = @doc.root
    end
  
      #insere os jogadores no arquivo XML de participantes
@@ -55,27 +50,30 @@ class Jogadores
        @i += 1
        #testa se o jogador já está inserido.
         if root.elements[@i] == nil then
+          puts jogador
           root.add_element('jogador', {"nome", jogador})
         end
 	   end #fim do laço
 	   
     file = File.open @arquivo_xml, 'wb'
-		file.puts @@doc
+		file.puts @doc
     file.close
- end
+ end ##fim do método add_jogadores
  
   #pega os participantes que estão em um arquivo XML 
   #e os transforma em uma hash com xmlsimple e os insere em um vetor.
-#   def get_participantes
-#     @@participantes = XmlSimple.xml_in(@@arquivo_xml, {'KeyAttr' => 'data'})
-#     
-#    #coloca os elementos no array
-#     @jogadores = Array.new; i = 0;
-#     @@participantes.each do |k, v| 
-#        @jogadores[i++] = v
-#     end
-#    p @jogadores
-#   end
+   def get_participantes
+     @participantes = XmlSimple.xml_in(@arquivo_xml, {'KeyAttr' => 'data'})
+     p @participantes
+    #coloca os elementos no array
+     @jogadores = Array.new; i = 0;
+        @participantes.each_pair do |c, v|
+           i = i+1; 
+           p "Chave: #{c} & Valor: #{v}" 
+          @jogadores[i] = v
+        end
+     p @jogadores
+   end
  
 ####### fim da classe Jogadores
 end 
