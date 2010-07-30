@@ -13,8 +13,9 @@ DIR_XML_FILES = "public/files/xml/"
 #HOME #############################################################
 #página index.
 get '/' do
-  jogadores = Jogadores.new DIR_XML_FILES+"participantes.xml"
-  jogadores.get_participantes
+  jd = Jogadores.new DIR_XML_FILES+"duplas_grupoA.xml"
+  duplas = jd.get_participantes
+  p duplas
   erb :index
 end
 
