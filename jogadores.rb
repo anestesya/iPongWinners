@@ -78,10 +78,5 @@ class Jogadores
        @jogadores
    end #fim do get_participantes
  
-   def get_partidas
-       def get_resultados
-     
-   end
- 
 ####### fim da classe Jogadores
 end 

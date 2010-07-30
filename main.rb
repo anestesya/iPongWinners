@@ -16,7 +16,7 @@ DIR_XML_FILES = "public/files/xml/"
 #########################################################
 #página index.
 get '/' do
-  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', ''
+  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', 'senha'
   google_connect.get_sheets
 
   erb :index
