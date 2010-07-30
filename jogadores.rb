@@ -21,7 +21,7 @@ class Jogadores
 
      if File.exist? @arquivo then
         p "#{@arquivo} existe"
-        file = Document.new File.new @arquivo
+        file = Document.new File.open @arquivo
      else 
         p "O arquivo #{@arquivo} não existia, tentando criar"
         arquivo = File.new @arquivo_xml, "w+"; arquivo.close; #cria o arquivo e fecha.
@@ -32,7 +32,6 @@ class Jogadores
         #em posse do arquivo passamos o XML para a XmlSimple.
         file = Document.new File.new @arquivo_xml
     end
-    file
   end #fim do método abre arquivo
    
  ##adiciona os jogadores em um arquivo XML caso receba um vetor com os nomes.
@@ -50,7 +49,6 @@ class Jogadores
        @i += 1
        #testa se o jogador já está inserido.
         if root.elements[@i] == nil then
-          puts jogador
           root.add_element('jogador', {"nome", jogador})
         end
 	   end #fim do laço
@@ -64,15 +62,28 @@ class Jogadores
   #e os transforma em uma hash com xmlsimple e os insere em um vetor.
    def get_participantes
      @participantes = XmlSimple.xml_in(@arquivo_xml, {'KeyAttr' => 'data'})
-     p @participantes
     #coloca os elementos no array
-     @jogadores = Array.new; i = 0;
+     @jogadores = Array.new; i = 0; l=0;
         @participantes.each_pair do |c, v|
-           i = i+1; 
-           p "Chave: #{c} & Valor: #{v}" 
-          @jogadores[i] = v
-        end
-     p @jogadores
+           #navega nos itens do Hash que estão dentro de um vetor
+           if v.class == Array then
+             v.each do |index|
+               index.each do |j, h|
+                  l = l+1
+                  @jogadores[l] = h
+               end
+             end
+           end
+       end
+       @jogadores
+   end #fim do get_participantes
+ 
+   def get_partidas
+     
+   end
+ 
+   def get_resultados
+     
    end
  
 ####### fim da classe Jogadores
