@@ -51,7 +51,7 @@ class Jogadores
         if root.elements[@i] == nil then
           root.add_element('jogador', {"nome", jogador})
         end
-	   end #fim do laço
+	   end #fim do laça
 	   
     file = File.open @arquivo_xml, 'wb'
 		file.puts @doc
@@ -79,10 +79,7 @@ class Jogadores
    end #fim do get_participantes
  
    def get_partidas
-     
-   end
- 
-   def get_resultados
+       def get_resultados
      
    end
  

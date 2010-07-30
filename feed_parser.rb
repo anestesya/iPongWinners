@@ -1,4 +1,4 @@
-#Este programa parseia os feeds do Google
+#programa parseia os feeds do Google
 #autor: tadeu luis anestesya@gmail.com
 
 require 'rubygems'

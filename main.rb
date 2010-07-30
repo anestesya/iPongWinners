@@ -1,28 +1,24 @@
-# usado com iPhone/iPad, Android ou Palm-pre... ou qualquer
+#Feito para ser usado com iPhone/iPad, Android ou Palm-pre... ou qualquer
 #dispositivo que tenha acesso web.
 #ele vai armazenar os resultados do Campeonato de Ping Pong da Guenka
 #autor: anesteysa@gmail.com
 
 require 'rubygems'
 require 'sinatra'
+
+#libs do programa
 require 'jogadores'
 require 'google_connect'
 
 #variável global com os jogadores
-DIR_XML_FILES = "public/files/xml/"#########################################################
+DIR_XML_FILES = "public/files/xml/"
+
+#########################################################
 #página index.
 get '/' do
-<<<<<<< HEAD
-  jogadores = Jogadores.new DIR_XML_FILES+"participantes.xml"
-  jogadores.get_participantes
-  
-  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', '@xf1ng3rd'
+  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', ''
   google_connect.get_sheets
-=======
-  jd = Jogadores.new DIR_XML_FILES+"duplas_grupoA.xml"
-  duplas = jd.get_participantes
-  p duplas
->>>>>>> a8c3bf689b08c2c36f31b40809d0d2e126a88d78
+
   erb :index
 end
 
