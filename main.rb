@@ -16,10 +16,11 @@ DIR_XML_FILES = "public/files/xml/"
 #########################################################
 #página index.
 get '/' do
-  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', 'senha'
-  google_connect.get_sheets
-
-  erb :index
+  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', '@xf1ng3rd'
+  sheet = google_connect.get_sheets
+    
+  #erb :index
+  "<h1>HASH da Planilha do Google SpreadSheets</h1><h2>iPongWinners</h2><div>#{sheet.inspect}</div>"
 end
 
 #JOGADORES #######################################################
