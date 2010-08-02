@@ -3,6 +3,7 @@
 require 'xmlsimple'
 require 'net/https'
 require 'feed_parser'
+require 'pp'
 
 class GoogleConnect
   
@@ -60,6 +61,7 @@ class GoogleConnect
       feed = get_feed_item
       chave = @f.get_spreadsheet_key
       uri_planilha = "http://spreadsheets.google.com/feeds/worksheets/#{chave}/private/full"
+      pp "URI: #{uri_planilha}"
       planilha = get_feed(uri_planilha, @headers)
       planilha = FeedParser.new planilha
       
@@ -67,13 +69,15 @@ class GoogleConnect
       @url_feed_list = planilha.get_feed_list_url
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
+      @n_p.get_pontos
+
       #pega as celulas da planilha
-      @url_cell_feed_list = planilha.get_feed_cell_list
-      @n_p2 = get_feed(@url_cell_feed_list, @headers)
-      @n_p2 = FeedParser.new @n_p2
+      #@url_cell_feed_list = planilha.get_feed_cell_list
+      #@n_p2 = get_feed(@url_cell_feed_list, @headers)
+      #@n_p2 = FeedParser.new @n_p2
       p "#######################################################################################################################"
      # @n_p2.show_doc
-       post_feedList
+      # post_feedList
    end 
    
    ################################
