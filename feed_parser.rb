@@ -26,11 +26,13 @@ class FeedParser
   #pega a chave da planilha
   def get_spreadsheet_key
     #@chave_planilha = @doc["entry"][0]["id"][0][/full\/(.*)/, 1]  #usa a planilha Torneio Tênis de mesa do usuário tadeu.gaudio
-	  #@chave = @doc["entry"][1]["id"][0][/full\/(.*)/, 1]	#usa a planilha iPongWinners do usuário tadeu.gaudio
+    #@chave = @doc["entry"][1]["id"][0][/full\/(.*)/, 1]	#usa a planilha iPongWinners do usuário tadeu.gaudio
     @chave = "tjS8wC9jSAR03-0pkf8cIhg" #planilha de tenis de mesa
   end
   
   #dentro do feed pega a URL#listFeed do documento a ser manipulado
+  #A URL retornada é utilizada na hora de parsear os dados
+  # e é muito importante.
   def get_feed_list_url 
      @feedList = @doc["entry"][0]["link"][0]['href']
      ##aqui testar para ver se o google devolve o resultado como HTTPS
@@ -39,36 +41,42 @@ class FeedParser
      @url_list = "http://" << swp_list.host << swp_list.path 
   end
  
-  #pega a URL#cellsFeed
+  #retorna a URL com a visualicação do tipo URL#cellsFeed
+  #A URL retornada é utilizada na hora de parsear os dados
+  # e é muito importante.
   def get_feed_cell_list_url
     @cellsFeed = @doc["entry"][0]["link"][1]["href"] 
     swp_list = URI.parse(@cellsFeed)
     @cell_url_list = "http://" << swp_list.host << swp_list.path 
   end
   
+  #pega os usuários que estão participando do campeonato
+  #devolve um vetor de @duplas ou de @users 
+  # * opcao = "" => devolve vetor de usuários simples @users
+  # * opcao = "duplas" devolve vetor de usuários @duplas
   def get_users(opcao)
-    
     @users = Array.new; @duplas = Array.new; i=0; d=0;
-    @doc["entry"].each do |user|
-	coluna = user["cell"][0]["col"]
-	jogador = user["cell"][0]["inputValue"]
-	if coluna == "2" || coluna == '6'
-                #testa para saber se o jogador já está no vetor
-                unless @users.include? jogador
-                   jogadores = jogador.split "/"
-                   if jogadores.size == 2
-			jogadores = jogadores.sort
-		        unless @duplas.include? jogadores
-				d +=1
-				@duplas[d] = jogadores
-			 end
-		   else
-                    	 i+=1
-		    	@users[i] = jogador
-                    end
-                end     
- 	end
-     end
+	
+	    @doc["entry"].each do |user|
+		coluna = user["cell"][0]["col"]
+		jogador = user["cell"][0]["inputValue"]
+		if coluna == "2" || coluna == '6'
+		        #testa para saber se o jogador já está no vetor
+		        unless @users.include? jogador
+		           jogadores = jogador.split "/"
+		           if jogadores.size == 2
+				jogadores = jogadores.sort
+				unless @duplas.include? jogadores
+					d +=1
+					@duplas[d] = jogadores
+				 end
+			   else
+		            	 i+=1
+			    	@users[i] = jogador
+		            end
+		        end     
+	 	end
+	     end##fim do doc["entry"]
      
      #se tiver alguma opção ele retorna as duplas
       p "Opcao: #{opcao.empty?}"
