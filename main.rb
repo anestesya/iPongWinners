@@ -13,19 +13,20 @@ require 'google_connect'
 #variável global com os jogadores
 DIR_XML_FILES = "public/files/xml/"
 
+$gc = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', ''
+
 #########################################################
 #página index.
 get '/' do
-  google_connect = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio', ''
-  sheet = google_connect.get_sheets
-    
-  #erb :index
-  "<h1>HASH da Planilha do Google SpreadSheets</h1><h2>iPongWinners</h2><div>#{sheet.inspect}</div>"
+  erb :index
+  #"<h1>HASH da Planilha do Google SpreadSheets</h1><h2>iPongWinners</h2><div>#{sheet.inspect}</div>"
 end
 
 #JOGADORES #######################################################
 #página de jogadores 
-get '/players' do 
+get '/players' do
+    feed = $gc.get_sheets
+    $jogadores = feed.get_users
  erb :players 
 end
 

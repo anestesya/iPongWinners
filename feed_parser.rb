@@ -6,7 +6,7 @@ require 'xmlsimple'
 require 'pp' #Import module 'pp' para 'pretty printing'
 
 class FeedParser
-	def initialize(documento)
+  def initialize(documento)
     #potas = File.new "#{ENV['PWD']}/xml_do_google.xml", "wb" 
     #potas.puts documento.body
     #potas.close
@@ -14,19 +14,21 @@ class FeedParser
   end
   
   #imprime o documento na tela em formato HASH visualizavel.
-	def show_doc 
-	  pp @doc
-	end
-
+  def show_doc 
+    pp @doc
+  end
+  
+  #retorna o documento para fims de leitura e testes.
   def get_doc 
     @doc
   end
+
   #pega a chave da planilha
   def get_spreadsheet_key
     #@chave_planilha = @doc["entry"][0]["id"][0][/full\/(.*)/, 1]  #usa a planilha Torneio Tênis de mesa do usuário tadeu.gaudio
 	  #@chave = @doc["entry"][1]["id"][0][/full\/(.*)/, 1]	#usa a planilha iPongWinners do usuário tadeu.gaudio
     @chave = "tjS8wC9jSAR03-0pkf8cIhg" #planilha de tenis de mesa
-	end
+  end
   
   #dentro do feed pega a URL#listFeed do documento a ser manipulado
   def get_feed_list_url 

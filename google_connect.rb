@@ -69,16 +69,6 @@ class GoogleConnect
       @url_feed_list = planilha.get_feed_cell_list_url
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
-      #@n_p.get_pontos 
-      @n_p.get_users
-
-      #pega as celulas da planilha
-      #@url_cell_feed_list = planilha.get_feed_cell_list
-      #@n_p2 = get_feed(@url_cell_feed_list, @headers)
-      #@n_p2 = FeedParser.new @n_p2
-      p "#######################################################################################################################"
-     # @n_p2.show_doc
-      # post_feedList
    end 
    
    ################################
