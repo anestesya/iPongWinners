@@ -46,7 +46,8 @@ class FeedParser
     @cell_url_list = "http://" << swp_list.host << swp_list.path 
   end
   
-  def get_users
+  def get_users(opcao)
+    
     @users = Array.new; @duplas = Array.new; i=0; d=0;
     @doc["entry"].each do |user|
 	coluna = user["cell"][0]["col"]
@@ -68,9 +69,14 @@ class FeedParser
                 end     
  	end
      end
-	pp  "Jogadores #{@users}"
-	pp "Duplas: #{@duplas}"
+     
+     #se tiver alguma opção ele retorna as duplas
+      p "Opcao: #{opcao.empty?}"
+     unless opcao.empty?
+	@duplas
+     else
 	@users
+     end
   end
 
   def get_pontos 

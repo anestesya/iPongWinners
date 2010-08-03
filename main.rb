@@ -26,7 +26,7 @@ end
 #página de jogadores 
 get '/players' do
     feed = $gc.get_sheets
-    $jogadores = feed.get_users
+    $jogadores = feed.get_users("")
  erb :players 
 end
 
@@ -58,7 +58,8 @@ end
 #DUPLAS ############################################################
 #página de duplas
 get '/duplas' do 
-    @duplas = $duplas_grupoA + $duplas_grupoB
+    feed = $gc.get_sheets
+    @duplas = feed.get_users "duplas"
     erb :duplas  
 end
 
