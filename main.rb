@@ -15,7 +15,7 @@ DIR_XML_FILES = "public/files/xml/"
 $feed = ""; $jogadores =""; $duplas="";
  #inicializa a conexãe e busca jogadores.
  def init
-   $gc = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', 'd3f1n3c0m'
+   $gc = GoogleConnect.new 'wise', 'ClientLogin', 'tadeu.gaudio@guenka.com.br', ''
    $feed = $gc.get_sheets
    $jogadores = $feed.get_users("")
    $duplas = $feed.get_users("duplas")
