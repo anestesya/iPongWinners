@@ -3,22 +3,24 @@
 
 require 'rubygems'
 require 'xmlsimple'
-require 'xml'
 require 'pp' #Import module 'pp' para 'pretty printing'
 
 class FeedParser
 	def initialize(documento)
-    potas = File.new "#{ENV['PWD']}/xml_do_google.xml", "wb" 
-    potas.puts documento.body
-    potas.close
-	  @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
+    #potas = File.new "#{ENV['PWD']}/xml_do_google.xml", "wb" 
+    #potas.puts documento.body
+    #potas.close
+        @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
   end
   
   #imprime o documento na tela em formato HASH visualizavel.
 	def show_doc 
 	  pp @doc
-  end	
-       
+	end
+
+  def get_doc 
+    @doc
+  end
   #pega a chave da planilha
   def get_spreadsheet_key
     #@chave_planilha = @doc["entry"][0]["id"][0][/full\/(.*)/, 1]  #usa a planilha Torneio Tênis de mesa do usuário tadeu.gaudio
@@ -36,27 +38,49 @@ class FeedParser
   end
  
   #pega a URL#cellsFeed
-  def get_feed_cell_list
+  def get_feed_cell_list_url
     @cellsFeed = @doc["entry"][0]["link"][1]["href"] 
     swp_list = URI.parse(@cellsFeed)
     @cell_url_list = "http://" << swp_list.host << swp_list.path 
   end
   
   def get_users
-    @users = Array.new
+    @users = Array.new; @duplas = Array.new; i=0; d=0;
     @doc["entry"].each do |user|
-      pp "USUÀRIO = #{user["jogador"]}"
-      @users[i] = user["jogador"]
-    end
-    @users
+	coluna = user["cell"][0]["col"]
+	jogador = user["cell"][0]["inputValue"]
+	if coluna == "2" || coluna == '6'
+                #testa para saber se o jogador já está no vetor
+                unless @users.include? jogador
+                   jogadores = jogador.split "/"
+                   if jogadores.size == 2
+			jogadores = jogadores.sort
+		        unless @duplas.include? jogadores
+				d +=1
+				@duplas[d] = jogadores
+			 end
+		   else
+                    	 i+=1
+		    	@users[i] = jogador
+                    end
+                end     
+ 	end
+     end
+	pp  "Jogadores #{@users}"
+	pp "Duplas: #{@duplas}"
+	@users
   end
 
   def get_pontos 
-    @pontos = Array.new
-    pp @doc
-    @doc["entry"].each do |pontos|
-      grupo = "_cyevm"
-      pp "Jogadores do Grupo A: #{pontos[grupo]} "#=> #{pontos[jogador]}"
+    #@pontos = Array.new
+     
+    @doc["entry"].each do |pontos|    
+             coluna = pontos["cell"][0]["col"] 
+             linha = pontos["cell"][0]["row"]
+             valor = pontos["cell"][0]["inputValue"]
+             if coluna == "2"
+            	 pp "Coluna: #{valor}"
+	     end        
       #@users[i] = user["ponstos"]
     end
   end

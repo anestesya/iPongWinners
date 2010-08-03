@@ -66,10 +66,11 @@ class GoogleConnect
       planilha = FeedParser.new planilha
       
       #pega a planilha iPongWinners  
-      @url_feed_list = planilha.get_feed_list_url
+      @url_feed_list = planilha.get_feed_cell_list_url
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
-      @n_p.get_pontos
+      #@n_p.get_pontos 
+      @n_p.get_users
 
       #pega as celulas da planilha
       #@url_cell_feed_list = planilha.get_feed_cell_list
