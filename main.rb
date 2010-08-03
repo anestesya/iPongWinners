@@ -15,7 +15,7 @@ DIR_XML_FILES = "public/files/xml/"
 $feed = ""; $jogadores =""; $duplas="";
  #inicializa a conexãe e busca jogadores.
  def init
-   user_senha = File.readlines("lock.tmp")
+   user_senha = File.readlines "lock.txt"
    p user_senha[0]
    p user_senha[1]
    $gc = GoogleConnect.new 'wise', 'ClientLogin', user_senha[0], user_senha[1]
