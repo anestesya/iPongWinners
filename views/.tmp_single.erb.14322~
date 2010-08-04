@@ -1,0 +1,8 @@
+<div id="um_contra_um" class="panel painel" title="Jogadores">
+	<h1><a href="/">Voltar</a></h1>
+	<ul>
+		<% $jogadores.each do |jogador| %>
+     		<li> <%= jogador %></li>
+		<% end %>
+	</ul>
+</div>

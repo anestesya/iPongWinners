@@ -1,0 +1,83 @@
+<html><h1>The H1 tag looks like this</h1>
+<p>The paragraph tag after an H1 tag looks like this</p>
+<h2>The H2 tag looks like this</h2>
+<p>The paragraph tag after an H2 tag looks like this</p>
+<h3>The H3 tag looks like this</h3>
+<p>The paragraph tag after an H3 tag looks like this</p>
+<h4>The H4 tag looks like this</h4>
+<p>The paragraph tag after an H4 tag looks like this</p>
+<h5>The H5 tag looks like this</h5>
+<p>The paragraph tag after an H5 tag looks like this</p>
+<ol>
+<li><strong>This is a strong element in an ordered list</strong></li>
+<li><i>This is an italic element in an ordered list</i></li>
+<li><b>This is a bold element in an ordered list</b></li>
+<li><em>This is an emphasized element in an ordered list</em></li>
+<li>This is a regular element in an ordered list</li>
+</ol>
+<ul>
+<li><strong>This is a strong element in an unordered list</strong></li>
+<li><i>This is an italic element in an unordered list</i></li>
+<li><b>This is a bold element in an unordered list</b></li>
+<li><em>This is an emphasized element in an unordered list</em></li>
+<li>This is a regular element in an unordered list</li>
+</ul>
+<blockquote>The block quote element looks like this</blockquote>
+<pre>The pre element looks like this</pre>
+<code>The code element looks like this</code>
+<br/>
+<span>The span element looks like this</span>
+<br/>
+<a href="#">The anchor element looks like this</a>
+<br/>
+<br/>
+<div style="float:left;margin:20px;width:200px;">Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.  Text inside a div that is 200 pixels wide looks like this.</div>
+<div style="float:left;margin:20px;width:400px;">Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.  Text inside a div that is 400 pixels wide looks like this.</div>
+<div style="float:left;margin:20px;width:600px;">Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.  Text inside a div that is 600 pixels wide looks like this.</div><style>* {margin:0; padding:0;}
+body {
+  margin:0 auto; 
+  background:url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong02.jpg) no-repeat 2.5em left, 
+  url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong01.jpg) no-repeat 25em right;
+}
+
+h1 {  
+   border-bottom:3px solid gray; width:100%;
+   font-family:"futura", "gill sans", "helvetica"; text-align:center;  text-shadow:1px 1px 5px black;
+   background-color:#1197dc !important; color:white; 
+   position:fixed; top:0; z-index:2;
+}
+h1 a {color:white !important; text-shadow:1px 1px 1px black !important; font-size:0.6	em !important;}
+h1 a:visited, h1 a:link {color:white !important; text-shadow:1px 1px 1px black !important;}
+h2 {color:black; font-size:1.5em; margin-top:0.5em; text-shadow:1px 1px 1px blue; width:100%; text-align:center;}
+
+ul {clear:both; list-style-type:none; margin:0 auto; width:100%; position:relative; z-index:1;}
+li {
+	text-transform:uppercase; text-align:center; font-size:2em; text-shadow: 3px 1px 5px gray;
+	border-top:1px solid gray; border-bottom:1px solid gray; 
+	display:block; width:100%; clear:both;
+}
+
+li a, h1 a {display:block; width:100%; text-decoration:none; color:black !important; text-shadow:1px 1px 1px #fff;}
+
+.painel {clear:both; position:absolute; top:1.5em; width:100%;}
+
+/*página de partida*/
+#um_contra_um {width:100%; clear:both;}
+/*lista de jogadores*/
+#um_contra_um ul {width:100%; margin:0 auto; text-align:center;}
+
+/*tela de partida*/
+#partida {font-size:1.5em; text-align:center; widht:100%; margin:0 auto;}
+#tempo {font-size:1.8em;}
+.jogador {float:left; display:block;}
+.jogador:last-child {float:right;}
+.pontos {margin:0 5px;}
+#jogo {width:100%; clear:both; font-size:1.2em; text-align:center; margin-bottom:10px;}
+#novo_set {width:45%; display:block;clear:both; bottom:0; position:relative; float:left; color:white; background-color:#12ac7b; text-shadow:1px 1px 1px black; text-algin:center;}
+#fim_partida {display:block; width:45%; float:right; position:relative; bottom:0; background-color:red; color:white; text-shadow:1px 1px 1px black;}
+
+/*scores*/
+li span {display:block; position:relative; }
+.player_ {float:left;}
+.score {float:right; }
+</style></html>

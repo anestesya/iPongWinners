@@ -16,14 +16,11 @@ $feed = ""; $jogadores =""; $duplas="";
  #inicializa a conexãe e busca jogadores.
  def init
    user_senha = File.readlines "lock.txt"
-   p user_senha[0]
-   p user_senha[1]
    $gc = GoogleConnect.new 'wise', 'ClientLogin', user_senha[0], user_senha[1]
    $feed = $gc.get_sheets
    $jogadores = $feed.get_users("")
    $duplas = $feed.get_users("duplas")
  end#fim do método de iniciar
-
 
 #página index.
 get '/' do
@@ -53,10 +50,14 @@ end
 
 #mostra pontuação para o um contra um 
 get '/score_single' do
+  if $feed.empty?
+    init
+  end
   erb :score_single
 end
 
 post '/score_single' do
+  
   p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
   erb :score_single
 end
@@ -72,7 +73,7 @@ end
 
 #mostra pontuação para as duplas
 get '/score_duplas' do
-  if $jogadore.empty?
+  if $jogadores.empty?
       init
   end
   @duplas = $duplas_grupoA + $duplas_grupoB
