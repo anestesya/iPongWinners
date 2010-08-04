@@ -1,5 +1,5 @@
 #Classe que manipula os dados dos jogadores
-#autor: tadeu luis anestesya@gmail.com
+#autor: tadeu luis anestesya@gmail
 
 require 'xmlsimple'
 require 'rexml/document'
@@ -10,6 +10,7 @@ class Jogadores
   #inicializa a classe para criar os arquivos. 
   def initialize(arquivo_xml)
      @arquivo_xml = arquivo_xml 
+     p "Arquivo inicializado na classe Jogadores: #{@arquivo_xml}"
      @doc = abre_arquivo @arquivo_xml
   end #fim da initialize
   
