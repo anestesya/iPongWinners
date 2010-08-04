@@ -1,8 +1,0 @@
-<div id="score_singles" class="painel">
-	<h1><a href="/">Voltar</a></h1>
-	<ul>
-		<% $jogadores.each do |jogador| %>
-     		<li><span class="player_"><%= jogador %></span><span class="score">0</span></li>
-		<% end %>
-	</ul>
-</div>

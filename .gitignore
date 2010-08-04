@@ -1,2 +1,8 @@
 $ cat .gitignore
+$cat .gitignore
 lock.txt
+
+*.tmp_*
+*.zip
+*.tar
+*.rar
