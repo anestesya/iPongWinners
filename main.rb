@@ -23,22 +23,6 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
    $gc = GoogleConnect.new 'wise', 'ClientLogin', user_senha[0], user_senha[1]
  end
 
- #Recebe um objeto do tipo FeedParser.
- #gera lista de feed para participantes e a modalidade de duplas.
- def participantes(feedParser) 
-   feed_parser = feedParser
-   
-   jogadores = feed_parser.get_users("")
-   criaListaJogadores = Jogadores.new DIR_XML_FILES + "participantes.xml"
-   criaListaJogadores.add_jogadores jogadores
-   p "#{DIR_XML_FILES}participantes.xml                   [OK]"
-        
-   duplas = feed_parser.get_users("duplas")
-   criaListaDuplas = Jogadores.new DIR_XML_FILES + "duplas.xml"
-   criaListaDuplas.add_jogadores duplas
-   p "#{DIR_XML_FILES}duplas.xml                          [OK]"
- end#fim do método de iniciar
-
   #Verifica se o arquivo de feed existe, caso ele exista verifica a hora de criacao
   # se for maior que 10 min cria um novo retorna o Feed.
   def verifica_criacao_arquivos
@@ -51,7 +35,7 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
         acesso = hora_atual.min.to_i - hora_de_acesso.min.to_i
        
         #atualiza arquivo se passado mais de 10min da criação do arquivo, cria um novo feed
-        if acesso > 10
+        if acesso > 0
              p "Pode gravar um arquivo novo. Passaram-se: #{acesso} da criação do arquivo"
              apagar = File.delete $feed_path
              apagar = File.delete DIR_XML_FILES+"participantes.xml"
@@ -65,10 +49,12 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
                     novo_feed.puts $feed.get_doc
                     novo_feed.close
                     participantes $feed
+                    
+                    @pontos = $feed.get_pontos
+                    
                  end
         else 
           p "O arquivo de feed ja esta atualizado"
-          return feed
         end
 
       #se o arquivo não existir
@@ -84,10 +70,33 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
         novo_feed.close
                
         participantes feed
+        
+          @pontos = feed.get_pontos
+        
         return File.open $feed_path
       end
   end #fim do verifica_criacao_arquivo
 
+#Recebe um objeto do tipo FeedParser.
+ #gera lista de feed para participantes e a modalidade de duplas.
+ def participantes(feedParser) 
+   feed_parser = feedParser
+   
+   jogadores = feed_parser.get_users("")
+   criaListaJogadores = Jogadores.new DIR_XML_FILES + "participantes.xml"
+   criaListaJogadores.add_jogadores jogadores
+   p "#{DIR_XML_FILES}participantes.xml                   [OK]"
+        
+   duplas = feed_parser.get_users("duplas")
+   criaListaDuplas = Jogadores.new DIR_XML_FILES + "duplas.xml"
+   criaListaDuplas.add_jogadores duplas
+   p "#{DIR_XML_FILES}duplas.xml                          [OK]"
+ end#fim do método de iniciar
+
+
+###################################################################################
+###### SERVER #####################################################################
+###################################################################################
 #página index.
 get '/' do
    #se não existe feed, não existe informação
@@ -97,7 +106,7 @@ get '/' do
 end
 
 #página de jogadores 
-get '/players' do
+get "/players" do
       
       if File.exist? DIR_XML_FILES + "participantes.xml"
         listaJogadores = Jogadores.new DIR_XML_FILES + "participantes.xml"
@@ -115,18 +124,29 @@ get '/single' do
         @jogadores =  listaJogadores.get_participantes
       else
         verifica_criacao_arquivos
-      end
+   end
    erb :single
 end
 
 #mostra pontuação para o um contra um 
 get '/score_single' do
-   if File.exist? DIR_XML_FILES + "participantes.xml"
+   
+     if File.exist? DIR_XML_FILES + "participantes.xml"
         listaJogadores = Jogadores.new DIR_XML_FILES + "participantes.xml"
         @score_jogadores =  listaJogadores.get_participantes
-      else
+        if File.exist? DIR_XML_FILES + "pontos.xml"
+          init
+          @pontos = $gc.get_feed_item
+          @pontos = @pontos.get_pontos
+        else
+          init
+          @pontos = $gc.get_feed_item
+          @pontos = @pontos.get_pontos
+        end
+     else
         verifica_criacao_arquivos
-      end
+     end
+        
   erb :score_single
 end
 
@@ -151,7 +171,7 @@ end
 
 #mostra pontuação para as duplas
 get '/score_duplas' do
-    if File.exist? DIR_XML_FILES + "duplas.xml"
+    if File.exist? DIR_XML_FILES+ "duplas.xml"
         listaJogadores = Jogadores.new DIR_XML_FILES + "duplas.xml"
         @score_duplas =  listaJogadores.get_participantes
       else

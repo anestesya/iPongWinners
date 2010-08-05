@@ -86,14 +86,20 @@ class FeedParser
 
   def get_pontos 
     #@pontos = Array.new
-     
     @doc["entry"].each do |pontos|    
              coluna = pontos["cell"][0]["col"] 
              linha = pontos["cell"][0]["row"]
              valor = pontos["cell"][0]["inputValue"]
              if coluna == "2"
-            	 pp "Coluna: #{valor}"
-	           end        
+            	 pp "Jogador: #{valor}"
+             end
+              
+               if coluna == "9"
+                 if linha == "4"
+                   pp "Vitorias: #{valor}"
+                 end
+               end
+           
       #@users[i] = user["ponstos"]
     end
   end
