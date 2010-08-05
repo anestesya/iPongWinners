@@ -7,9 +7,6 @@ require 'pp' #Import module 'pp' para 'pretty printing'
 
 class FeedParser
   def initialize(documento)
-    #potas = File.new "#{ENV['PWD']}/xml_do_google.xml", "wb" 
-    #potas.puts documento.body
-    #potas.close
         @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
   end
   
@@ -33,7 +30,7 @@ class FeedParser
   #dentro do feed pega a URL#listFeed do documento a ser manipulado
   #A URL retornada é utilizada na hora de parsear os dados
   # e é muito importante.
-  def get_feed_list_url 
+  def get_feed_list_url
      @feedList = @doc["entry"][0]["link"][0]['href']
      ##aqui testar para ver se o google devolve o resultado como HTTPS
      ##como já utilizamos conexão SSL não precisa da extensão https:// na URI e sim http://
@@ -58,24 +55,24 @@ class FeedParser
     @users = Array.new; @duplas = Array.new; i=0; d=0;
 	
 	    @doc["entry"].each do |user|
-		coluna = user["cell"][0]["col"]
-		jogador = user["cell"][0]["inputValue"]
-		if coluna == "2" || coluna == '6'
+		    coluna = user["cell"][0]["col"]
+		    jogador = user["cell"][0]["inputValue"]
+		    if coluna == "2" || coluna == '6'
 		        #testa para saber se o jogador já está no vetor
 		        unless @users.include? jogador
 		           jogadores = jogador.split "/"
 		           if jogadores.size == 2
-				jogadores = jogadores.sort
-				unless @duplas.include? jogadores
-					d +=1
-					@duplas[d] = jogadores
-				 end
-			   else
+				          jogadores = jogadores.sort
+				          unless @duplas.include? jogadores
+					             d +=1
+				            	@duplas[d] = jogadores
+				          end
+			         else
 		            	 i+=1
-			    	@users[i] = jogador
-		            end
+			    	        @users[i] = jogador
+		           end
 		        end     
-	 	end
+	 	      end
 	     end##fim do doc["entry"]
      
      #se tiver alguma opção ele retorna as duplas
@@ -96,7 +93,7 @@ class FeedParser
              valor = pontos["cell"][0]["inputValue"]
              if coluna == "2"
             	 pp "Coluna: #{valor}"
-	     end        
+	           end        
       #@users[i] = user["ponstos"]
     end
   end

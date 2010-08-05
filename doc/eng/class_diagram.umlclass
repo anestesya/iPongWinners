@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmlns:uml2tools.notation="http://www.eclipse.org/mdt/uml2tools/gmf/notation/ext/2008" xmi:id="_eHyhlKC2Ed-P66sbeFxFkA" type="UMLClass" name="class_diagram.umlclass" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_eYa-kKC2Ed-P66sbeFxFkA" type="2014" fontName="Sans">
+    <children xmi:type="notation:DecorationNode" xmi:id="_eYa-kqC2Ed-P66sbeFxFkA" type="5020"/>
+    <children xmi:type="notation:DecorationNode" xmi:id="_eYa-k6C2Ed-P66sbeFxFkA" type="5041"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_eYa-lKC2Ed-P66sbeFxFkA" type="7032">
+      <styles xmi:type="notation:SortingStyle" xmi:id="_eYa-laC2Ed-P66sbeFxFkA"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_eYa-lqC2Ed-P66sbeFxFkA"/>
+      <styles xmi:type="notation:CanonicalStyle" xmi:id="_eYa-l6C2Ed-P66sbeFxFkA"/>
+    </children>
+    <element xmi:type="uml:Model" href="class_diagram.uml#_eHQWEKC2Ed-P66sbeFxFkA"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eYa-kaC2Ed-P66sbeFxFkA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_eHyhlaC2Ed-P66sbeFxFkA"/>
+  <styles xmi:type="uml2tools.notation:U2TDiagramCanonicalStyle" xmi:id="_eHyhlqC2Ed-P66sbeFxFkA"/>
+  <styles xmi:type="notation:FilteringStyle" xmi:id="_eHyhl6C2Ed-P66sbeFxFkA"/>
+  <element xmi:type="uml:Model" href="class_diagram.uml#_eHQWEKC2Ed-P66sbeFxFkA"/>
+</notation:Diagram>

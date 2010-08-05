@@ -329,26 +329,33 @@
       </controlProperties>
     </control>
     <control controlID="80" controlTypeID="com.balsamiq.mockups::Canvas" x="692" y="1147" w="294" h="173" measuredW="100" measuredH="70" zOrder="62" locked="false" isInGroup="-1"/>
-    <control controlID="81" controlTypeID="com.balsamiq.mockups::IconLabel" x="710" y="1162" w="-1" h="-1" measuredW="48" measuredH="73" zOrder="63" locked="false" isInGroup="-1">
+    <control controlID="81" controlTypeID="com.balsamiq.mockups::IconLabel" x="710" y="1196" w="-1" h="-1" measuredW="48" measuredH="73" zOrder="63" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Tadeu</text>
       </controlProperties>
     </control>
-    <control controlID="82" controlTypeID="com.balsamiq.mockups::Label" x="776" y="1187" w="-1" h="-1" measuredW="192" measuredH="25" zOrder="64" locked="false" isInGroup="-1">
+    <control controlID="82" controlTypeID="com.balsamiq.mockups::Label" x="776" y="1221" w="-1" h="-1" measuredW="192" measuredH="25" zOrder="64" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Solo%20%20%20%20%20%20%20%20%20A%20%20%200%20%20%200%20%200%20%20%200%20</text>
       </controlProperties>
     </control>
-    <control controlID="83" controlTypeID="com.balsamiq.mockups::Label" x="778" y="1212" w="-1" h="-1" measuredW="178" measuredH="25" zOrder="65" locked="false" isInGroup="-1">
+    <control controlID="83" controlTypeID="com.balsamiq.mockups::Label" x="778" y="1246" w="-1" h="-1" measuredW="178" measuredH="25" zOrder="65" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Duplas%20%20%20%20%20%20%20%20%20%200%20%20%200%20%20%200%20%200</text>
       </controlProperties>
     </control>
-    <control controlID="84" controlTypeID="com.balsamiq.mockups::Label" x="770" y="1162" w="-1" h="-1" measuredW="202" measuredH="25" zOrder="66" locked="false" isInGroup="-1">
+    <control controlID="84" controlTypeID="com.balsamiq.mockups::Label" x="770" y="1196" w="-1" h="-1" measuredW="202" measuredH="25" zOrder="66" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%20Modalidade%20%20G%20%20%20J%20%20%20V%20%20D%20%20%20P%20</text>
       </controlProperties>
     </control>
-    <control controlID="85" controlTypeID="com.balsamiq.mockups::HRule" x="781" y="1181" w="190" h="-1" measuredW="100" measuredH="5" zOrder="67" locked="false" isInGroup="-1"/>
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::HRule" x="781" y="1215" w="190" h="-1" measuredW="100" measuredH="5" zOrder="67" locked="false" isInGroup="-1"/>
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::HRule" x="698" y="1180" w="288" h="-1" measuredW="100" measuredH="5" zOrder="68" locked="false" isInGroup="-1"/>
+    <control controlID="87" controlTypeID="com.balsamiq.mockups::PointyButton" x="710" y="1153" w="-1" h="-1" measuredW="59" measuredH="28" zOrder="69" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Voltar</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>
