@@ -13,11 +13,14 @@ require 'google_connect'
 #variável global com os jogadores
 DIR_XML_FILES = "public/files/xml/"
 $feed = ""; $jogadores =""; $duplas="";
+
  #inicializa a conexãe e busca jogadores.
  def init
    user_senha = File.readlines "lock.txt"; feed_path = DIR_XML_FILES+"feed.xml";
+ 
    $gc = GoogleConnect.new 'wise', 'ClientLogin', user_senha[0], user_senha[1]
    $feed = $gc.get_sheets
+   
    if File.exist? feed_path
       feed = File.open feed_path, 'wb'
       #pega hora de criação do arquivo
@@ -26,19 +29,20 @@ $feed = ""; $jogadores =""; $duplas="";
 
       #se a tiver passado mais de 10min da criação do arquivo, cria um novo feed
       acesso = hora_atual.min.to_i - hora_de_acesso.min.to_i
-      if acesso > 10
+      p "Hora de criacao do arquivo: #{hora_de_acesso}, hora atual: #{hora_atual}, diferença do acesso maoir que if #{acesso} > 10"
+      if acesso > 0
         p "Pode gravar um arquivo novo. Passaram-se: #{acesso} da criação do arquivo"
-        feed.close
-        feed = File.delete feed_path
-        if feed == 1
-          feed = File.new feed_path, "w+"
+        apagado = File.delete feed_path
+        p "Resultado da remocao do arquivo: #{apagado}"
+        if apagado == 1
+          p "Dados a serem gravados no arquivo: #{$feed.root}"
+          feed = File.new feed_path, "wb"
           feed.puts $feed
           feed.close
         end
       end #fim do atualiza arquivo
    else
-     feed = File.new feed_path, "w+"
-     p "Arquivo criado: #{$feed}"
+     feed = File.new feed_path, "wb"
      feed.puts $feed
      feed.close
    end
