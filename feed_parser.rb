@@ -7,7 +7,7 @@ require 'pp' #Import module 'pp' para 'pretty printing'
 
 class FeedParser
   def initialize(documento)
-        @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
+      @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
   end
   
   #imprime o documento na tela em formato HASH visualizavel.
@@ -84,24 +84,45 @@ class FeedParser
      end
   end
 
-  def get_pontos 
-    #@pontos = Array.new
+  def get_pontos    
+    @pontos = Array.new; users = Array.new;
+    
     @doc["entry"].each do |pontos|    
              coluna = pontos["cell"][0]["col"] 
              linha = pontos["cell"][0]["row"]
              valor = pontos["cell"][0]["inputValue"]
-             if coluna == "2"
-            	 pp "Jogador: #{valor}"
+             
+             #Pega os jogadores dos grupos A e C
+             if coluna == "8" || coluna == "15"
+               xpr = valor.match /(GRUPO) (.*)/
+               if xpr == nil
+                  users.push valor
+               end
              end
-              
-               if coluna == "9"
-                 if linha == "4"
-                   pp "Vitorias: #{valor}"
+             
+              #pega a pontuação dos usuários.
+              if coluna == "10" || coluna == "17"
+                 if linha.to_i > 3
+                    if valor == "0"
+                      p "Linha: #{linha}, Coluna 10, valor: #{valor.to_i.to_int}"
+                      @pontos.push 0
+                     elsif !(valor.to_i == 0)
+                      p "LInha #{linha}, valor: #{valor}"
+                      @pontos.push valor
+                     end
                  end
                end
-           
-      #@users[i] = user["ponstos"]
-    end
+     end#varre_feed
+     
+     #cria vetor com user_ponto["Tadeu"] = "0"
+     j = 0; @user_score = {};
+     users.each do |u|
+       score ={u => @pontos[j]}
+       @user_score = @user_score.merge(score) 
+       j+=1
+     end
+
+     @user_score
   end
 ##fim da Classe FeedParser
 end

@@ -94,6 +94,5 @@ class GoogleConnect
       p post_response.body
    end
    
-   
   ##fim da classe GoogleConnect
 end

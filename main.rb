@@ -44,14 +44,10 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
                  if apagar == 1
                     init #inicializa a conexão com o google
                     $feed = $gc.get_sheets
-                    p "Dados a serem gravados no arquivo: #{$feed.get_doc}"
                     novo_feed = File.new $feed_path, "wb"
                     novo_feed.puts $feed.get_doc
                     novo_feed.close
                     participantes $feed
-                    
-                    @pontos = $feed.get_pontos
-                    
                  end
         else 
           p "O arquivo de feed ja esta atualizado"
@@ -70,9 +66,6 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
         novo_feed.close
                
         participantes feed
-        
-          @pontos = feed.get_pontos
-        
         return File.open $feed_path
       end
   end #fim do verifica_criacao_arquivo
@@ -130,28 +123,14 @@ end
 
 #mostra pontuação para o um contra um 
 get '/score_single' do
-   
-     if File.exist? DIR_XML_FILES + "participantes.xml"
-        listaJogadores = Jogadores.new DIR_XML_FILES + "participantes.xml"
-        @score_jogadores =  listaJogadores.get_participantes
-        if File.exist? DIR_XML_FILES + "pontos.xml"
-          init
-          @pontos = $gc.get_feed_item
-          @pontos = @pontos.get_pontos
-        else
-          init
-          @pontos = $gc.get_feed_item
-          @pontos = @pontos.get_pontos
-        end
-     else
-        verifica_criacao_arquivos
-     end
-        
+        init #inicializa conexão com o google
+        feed = $gc.get_sheets
+        @pontuacao = feed.get_pontos
+        p @pontuacao.class
   erb :score_single
 end
 
 post '/score_single' do
-  
   p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
   erb :score_single
 end
