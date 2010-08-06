@@ -84,45 +84,102 @@ class FeedParser
      end
   end
 
-  def get_pontos    
-    @pontos = Array.new; users = Array.new;
-    
-    @doc["entry"].each do |pontos|    
-             coluna = pontos["cell"][0]["col"] 
-             linha = pontos["cell"][0]["row"]
-             valor = pontos["cell"][0]["inputValue"]
-             
-             #Pega os jogadores dos grupos A e C
-             if coluna == "8" || coluna == "15"
-               xpr = valor.match /(GRUPO) (.*)/
-               if xpr == nil
-                  users.push valor
-               end
-             end
-             
-              #pega a pontuação dos usuários.
-              if coluna == "10" || coluna == "17"
-                 if linha.to_i > 3
-                    if valor == "0"
-                      p "Linha: #{linha}, Coluna 10, valor: #{valor.to_i.to_int}"
-                      @pontos.push 0
-                     elsif !(valor.to_i == 0)
-                      p "LInha #{linha}, valor: #{valor}"
-                      @pontos.push valor
-                     end
-                 end
-               end
-     end#varre_feed
-     
-     #cria vetor com user_ponto["Tadeu"] = "0"
-     j = 0; @user_score = {};
-     users.each do |u|
-       score ={u => @pontos[j]}
-       @user_score = @user_score.merge(score) 
-       j+=1
-     end
 
-     @user_score
-  end
+  #Pega a pontuação dos resultados
+  def get_pontos    
+        @pontos = Array.new; users = Array.new;
+            @doc["entry"].each do |pontos|    
+                     coluna = pontos["cell"][0]["col"] 
+                     linha = pontos["cell"][0]["row"]
+                     valor = pontos["cell"][0]["inputValue"]
+                    
+                     #Pega os jogadores dos grupos A e C
+                     if coluna == "8" || coluna == "15"
+                       xpr = valor.match /(GRUPO) (.*)/
+                       if xpr == nil
+                          users.push valor
+                       end
+                     end
+                     
+                      #pega a pontuação dos usuários.
+                      if coluna == "10" || coluna == "17"
+                         if linha.to_i > 3
+                            if valor == "0"
+                              p "Linha: #{linha}, Coluna 10, valor: #{valor.to_i.to_int}"
+                              @pontos.push 0
+                             elsif !(valor.to_i == 0)
+                              p "LInha #{linha}, valor: #{valor}"
+                              @pontos.push valor
+                             end
+                         end
+                     end
+             end#varre_feed
+                              
+             #cria vetor com user_ponto["Tadeu"] = "0"
+             j = 0; @user_score = {};
+             users.each do |u|
+               score ={u => @pontos[j]}
+               @user_score = @user_score.merge(score) 
+               j+=1
+             end
+         @user_score
+  end#fim do get_pontos
+    
+    #pega  as datas dos jogos e as coloca em um vetor
+    def get_jogos
+        @dt = Array.new; @dados = ""; vetor = Array.new; contador=0;
+        @doc["entry"].each do |pontos| 
+             p "Contador: #{contador}"
+             linha = pontos["cell"][0]["row"]
+             coluna = pontos["cell"][0]["col"] 
+             valor = pontos["cell"][0]["inputValue"]
+             #pega as datas dos jogos
+               if linha.to_i > 2 && contador > 3
+                 p "Jogo: #{valor} #{pontos["cell"][0]["col"][2]} #{pontos["cell"][0]["col"][3] } X #{pontos["cell"][0]["col"][5] } #{pontos["cell"][0]["col"][6] } "
+               end#fim da linha
+             
+              contador += contador
+#             if coluna == "2"
+#               if linha.to_i > 2
+#                  pp "Jogador A: #{valor} #{contador}"
+#                  jogador_a = valor
+#                  @dados += valor + " "
+#                end              
+#             end
+#             
+#             if coluna == "3"
+#               if linha.to_i > 2
+#                 pp "Pontos A: #{valor} #{contador}"
+#                 pontos_a = valor
+#                 @dados += valor + " "
+#               end
+#             end
+#             
+#             if coluna == "4"
+#               if linha.to_i > 2
+#                    pp "Versus: #{valor} #{contador}"
+#                    versus = valor
+#                    @dados += valor + " "
+#                end
+#              end
+#                  
+#              if coluna == "5"
+#                if linha.to_i > 2
+#                   pp "Pontos B: #{valor} #{contador}"
+#                    pontos_b = valor
+#                    @dados += valor + " "
+#                end
+#              end
+#                  
+#              if coluna == "6"
+#                 if linha.to_i > 2
+#                      pp "Jogador: #{valor} #{contador}"
+#                      jogador_b = valor
+#                      @dados += valor
+#                end
+#              end
+              
+            end#fim teste principal
+    end#fim do get_datas
 ##fim da Classe FeedParser
 end

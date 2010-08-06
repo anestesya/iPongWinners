@@ -127,6 +127,7 @@ get '/score_single' do
         feed = $gc.get_sheets
         @pontuacao = feed.get_pontos
         p @pontuacao.class
+        feed.get_jogos
   erb :score_single
 end
 
