@@ -7,7 +7,11 @@ require 'pp' #Import module 'pp' para 'pretty printing'
 
 class FeedParser
   def initialize(documento)
-      @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
+    p "Vamos criar um xml para ser visto."
+    potas = File.new "#{ENV['PWD']}/cellFeed.xml", "wb" 
+    potas.puts documento.body
+    potas.close
+    @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
   end
   
   #imprime o documento na tela em formato HASH visualizavel.
@@ -22,30 +26,35 @@ class FeedParser
 
   #pega a chave da planilha
   def get_spreadsheet_key
-    #@chave_planilha = @doc["entry"][0]["id"][0][/full\/(.*)/, 1]  #usa a planilha Torneio Tênis de mesa do usuário tadeu.gaudio
-    #@chave = @doc["entry"][1]["id"][0][/full\/(.*)/, 1]	#usa a planilha iPongWinners do usuário tadeu.gaudio
+    #@chave_planilha = @doc["entry"][0]["id"][0][/full\/(.*)/, 1] usa a planilha Torneio Tênis de mesa do usuário tadeu.gaudio
+    #@chave = @doc["entry"][1]["id"][0][/full\/(.*)/, 1]	usa a planilha iPongWinners do usuário tadeu.gaudio
     @chave = "tjS8wC9jSAR03-0pkf8cIhg" #planilha de tenis de mesa
   end
   
   #dentro do feed pega a URL#listFeed do documento a ser manipulado
   #A URL retornada é utilizada na hora de parsear os dados
   # e é muito importante.
-  def get_feed_list_url
-     @feedList = @doc["entry"][0]["link"][0]['href']
-     ##aqui testar para ver se o google devolve o resultado como HTTPS
-     ##como já utilizamos conexão SSL não precisa da extensão https:// na URI e sim http://
-     swp_list = URI.parse(@feedList)
-     @url_list = "http://" << swp_list.host << swp_list.path 
+  def get_url_feed(tipo)
+     #verifica o tipo do feed para pegar manipular os dados de forma direferenciada
+     if tipo == "listFeed"
+       @feedType = @doc["entry"][0]["link"][0]['href']
+     elsif tipo == "cellFeed"
+       @feedType = @doc["entry"][0]["link"][1]["href"]
+     end
+     
+     get_uri_to_update(12, 10)
+     
+     #como já utilizamos conexão SSL não precisa da extensão https:// na URI e sim http://
+     swp_list = URI.parse(@feedType)
+     @url_feed = "http://" << swp_list.host << swp_list.path
   end
  
-  #retorna a URL com a visualicação do tipo URL#cellsFeed
-  #A URL retornada é utilizada na hora de parsear os dados
-  # e é muito importante.
-  def get_feed_cell_list_url
-    @cellsFeed = @doc["entry"][0]["link"][1]["href"] 
-    swp_list = URI.parse(@cellsFeed)
-    @cell_url_list = "http://" << swp_list.host << swp_list.path 
-  end
+  #retorna a URI completa para inserir dados utilizando o método de cedulas.
+  def get_uri_to_update(linha, coluna)
+       uri_rc = @doc["id"][0]
+       uri_rc += "/R#{linha}C#{coluna}" #URI para a Linha A coluna B
+       uri_rc = uri_rc.gsub "https://", "http://"
+  end  
   
   #pega os usuários que estão participando do campeonato
   #devolve um vetor de @duplas ou de @users 
@@ -129,7 +138,7 @@ class FeedParser
     def get_jogos
         @dt = Array.new; @dados = ""; vetor = Array.new; contador=0;
         @doc["entry"].each do |pontos| 
-             p "Contador: #{contador}"
+             #p "Contador: #{contador}"
              linha = pontos["cell"][0]["row"]
              coluna = pontos["cell"][0]["col"] 
              valor = pontos["cell"][0]["inputValue"]

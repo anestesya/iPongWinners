@@ -161,8 +161,8 @@ get '/score_duplas' do
 end
 
 post '/score_duplas' do
- p "Jogadores: #{params[:jogador_b]} ==== #{params[:jogador_a]}"
- p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
+  p "Jogadores: #{params[:jogador_b]} ==== #{params[:jogador_a]}"
+  p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
  
   @duplas = [params[:set], params[:tempo], params[:jogador_a], params[:jogador_b], params[:pnt_jogador_a], params[:pnt_jogador_b]];
   
