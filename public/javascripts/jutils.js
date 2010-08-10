@@ -56,6 +56,7 @@ jQuery(function($){
 				/* Clica no botão de terminar a partida 
 				 *e envia os dados para o ruby
 				 */
+				 var sets_jogadorA = sets_jogadorB = new Array();
 				 $('#novo_set, #fim_partida').click(function(){
 					 	var $this = $(this), vencedor, jogador = new Array(2);
 					 	var bt = $this.attr('id'), pontos = new Array(2), set = $('.set').text(), url_score = $('h1 a').attr('href');
@@ -74,30 +75,52 @@ jQuery(function($){
 							//envia os dados direto para o bd.
 							if(pontos[0] > pontos[1]){
 								vencedor = jogador[0];
-							}else {vencedor = jogador[1];}
+								console.log("Vencedor: "+vencedor)
+								sets_jogadorA.push(1);
+								console.log('Sets:'+sets_jogadorA)
+								sets_jogadorB.push(0)	
+								console.log('Sets:'+sets_jogadorB)
+							}else {
+								vencedor = jogador[1];
+								console.log("Vencedor: "+vencedor)
+								sets_jogadorB.push(0)	
+								sets_jogadorA.push(1);
+								console.log('Sets:'+sets_jogadorA)
+								console.log('Sets:'+sets_jogadorB)
+							}
 							
 						if(bt == "fim_partida"){
+							
 							$.ajax({
 								url: url_score,
 								type: 'POST',
 								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
-								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1],
-								success: function(){window.location.href = "/"} //volta para a página index do programa.
+								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1]+'&sets_jogadorA='+sets_jogadorA+'&sets_jogadorB='+sets_jogadorB,
+								success: function(){window.location.href = "/"; sets_jogadorA = sets_jogadorB = 0} //volta para a página index do programa.
 							});//fim do ajax
 						}else{
+							
 							//a partida continua e os dados são apenas armazenados.
-							$.ajax({
+							if( vencedor == jogador[0]){
+								sets_jogadorA.push(1)
+								sets_jogadorB.push(0)	
+							}else if (vencedor == jogador[1]){
+								sets_jogadorB.push(0)
+							   	sets_jogadorA.push(1)
+							}
+							
+							/*$.ajax({
 								url: url_score,
 								type: 'POST',
 								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
 								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1],
-								success: function(){
+								success: function(){*/
 										set = parseInt(set)+1;
 										$('.pontos').text('0');
 										$('.set').text(set);
 										mostraHora('#tempo');
-								}
-						    });//fim do ajax
+								//}
+						    //});//fim do ajax
 						    return false;
 					   	}//fim dos testes
 				   });//fim do evento de clique nos botões "novo set" & "fim_partida"

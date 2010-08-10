@@ -131,10 +131,11 @@ get '/score_single' do
 end
 
 post '/score_single' do
-  p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
+  p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} Sets do Jogador A: #{params[:sets_jogadorA]}, Sets do Jogador B: #{params[:sets_jogadorB]}"
   "<h1>SCORE</h1>"
   #erb :score_single
 end
+
 
 #DUPLAS ############################################################
 #página de duplas
