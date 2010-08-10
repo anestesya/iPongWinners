@@ -126,14 +126,14 @@ get '/score_single' do
         init #inicializa conexão com o google
         feed = $gc.get_sheets
         @pontuacao = feed.get_pontos
-        p @pontuacao.class
-        feed.get_jogos
+        #feed.get_jogos
   erb :score_single
 end
 
 post '/score_single' do
   p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]}"
-  erb :score_single
+  "<h1>SCORE</h1>"
+  #erb :score_single
 end
 
 #DUPLAS ############################################################

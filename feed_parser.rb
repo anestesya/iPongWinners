@@ -42,18 +42,17 @@ class FeedParser
        @feedType = @doc["entry"][0]["link"][1]["href"]
      end
      
-     get_uri_to_update(12, 10)
-     
      #como já utilizamos conexão SSL não precisa da extensão https:// na URI e sim http://
      swp_list = URI.parse(@feedType)
      @url_feed = "http://" << swp_list.host << swp_list.path
   end
  
   #retorna a URI completa para inserir dados utilizando o método de cedulas.
-  def get_uri_to_update(linha, coluna)
+  def get_uri_to_update
+       #p "Linha: #{linha} Coluna: #{coluna}"
        uri_rc = @doc["id"][0]
-       uri_rc += "/R#{linha}C#{coluna}" #URI para a Linha A coluna B
-       uri_rc = uri_rc.gsub "https://", "http://"
+      # uri_rc += "/R#{linha}C#{coluna}" #URI para a Linha A coluna B
+        uri_rc = uri_rc.gsub "https://", "http://"
   end  
   
   #pega os usuários que estão participando do campeonato
@@ -114,10 +113,10 @@ class FeedParser
                       if coluna == "10" || coluna == "17"
                          if linha.to_i > 3
                             if valor == "0"
-                              p "Linha: #{linha}, Coluna 10, valor: #{valor.to_i.to_int}"
+                              #p "Linha: #{linha}, Coluna 10, valor: #{valor.to_i.to_int}"
                               @pontos.push 0
                              elsif !(valor.to_i == 0)
-                              p "LInha #{linha}, valor: #{valor}"
+                             # p "LInha #{linha}, valor: #{valor}"
                               @pontos.push valor
                              end
                          end

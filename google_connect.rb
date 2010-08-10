@@ -60,7 +60,7 @@ class GoogleConnect
    #pega o conteúdo de uma planilha específica
    def get_sheets
       feed = get_feed_item
-      chave = @f.get_spreadsheet_key
+      chave = feed.get_spreadsheet_key
       uri_planilha = "http://spreadsheets.google.com/feeds/worksheets/#{chave}/private/full"
       pp "URI: #{uri_planilha}"
       planilha = get_feed(uri_planilha, @headers)
@@ -71,17 +71,14 @@ class GoogleConnect
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
        
-      #mostra uri para update
-      update_uri = @n_p.get_uri_to_update(6, 10)
-      #versao = get_version_string(update_uri, @headers)
-      #p "versao: #{versao}"
-      
-      
       #atualiza via feeds
-      dados_a_serem_atualizados = [ {:batch_id => 'A', :cell_id => 'R6C10', :data => '50'} ]
+      #dados_a_serem_atualizados = [ {:batch_id => 'A1', :cell_id => 'R6C11', :data => '50'}]
+      #update_uri = @n_p.get_uri_to_update
       
-      pp batch_update(dados_a_serem_atualizados, update_uri, @headers)
-      
+      #rsp = batch_update(dados_a_serem_atualizados, update_uri, @headers)
+     
+      #p "Resultado da atualizacao dos dados: #{rsp}"
+      #pp rsp.body
       @n_p
    end 
    
@@ -95,7 +92,6 @@ class GoogleConnect
       xml = REXML::Document.new response.body
       edit_link = REXML::XPath.first(xml, '//[@rel="edit"]')
       edit_link_href = edit_link.attribute('href').to_s
-      p "Versão para a celula: #{edit_link_href.split(/\//)[10]} "
       return edit_link_href.split(/\//)[10]
    end
   
@@ -113,54 +109,39 @@ class GoogleConnect
    
    #Atualiza por Bacth várias celulas atualizadas de uma unica chamada.
    def batch_update(batch_data, cellfeed_uri, headers)
+     
         batch_uri = cellfeed_uri+"/batch"
-        batch_request = '<?xml version="1.0" encoding="utf-8"?>'<<
-            '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:batch="http://schemas.google.com/gdata/batch"' <<
-            'xmlns:gs="http://schemas.google.com/spreadsheets/2006" xmlns:gd="http://schemas.google.com/g/2005">' <<
+        
+        #cria pedaço do feed para ser atualizado
+        batch_request = '<?xml version="1.0" encoding="utf-8" ?>' <<
+            ' <feed xmlns="http://www.w3.org/2005/Atom" xmlns:batch="http://schemas.google.com/gdata/batch" xmlns:gs="http://schemas.google.com/spreadsheets/2006" xmlns:gd="http://schemas.google.com/g/2005">' <<
             "<id>#{cellfeed_uri}</id>";
             
-            batch_data.each do |batch_request_data|
-              version_string = get_version_string(cellfeed_uri + '/' + batch_request_data[:cell_id], headers)
-              data = batch_request_data[:data]
-              batch_id = batch_request_data[:batch_id]
-              cell_id = batch_request_data[:cell_id]
-              row = batch_request_data[:cell_id][1,1]
-              column = batch_request_data[:cell_id][3,1]
-              edit_link = cellfeed_uri + '/' + version_string
-              
-              
-              batch_request << "<entry> <gs:cell col=" << "#{column} inputValue=" << "#{data}" << " row=" << "#{row}" << "/>" <<
-                          "<batch:id>#{batch_id}</batch:id>" <<
-                          '<batch:operation type="update" />' <<
-                          "<id>#{cellfeed_uri}</id>" <<
-                          "<link href=" << "#{edit_link}" << 'rel="edit" type="application/atom+xml" />' <<
-                          '</entry>';
-            end#fim do each
+                      #cria cada linha da planinlha
+                      batch_data.each do |batch_request_data|
+                        version_string = get_version_string(cellfeed_uri + '/' + batch_request_data[:cell_id], headers)
+                        data = batch_request_data[:data]
+                        batch_id = batch_request_data[:batch_id]
+                        cell_id = batch_request_data[:cell_id]
+                        row = batch_request_data[:cell_id][1,1]
+                        column = batch_request_data[:cell_id][3,2]
+                        edit_link = cellfeed_uri + '/' + cell_id + '/' + version_string
+                        
+                        
+                        batch_request << "<entry>" << 
+                                    "<batch:id>#{batch_id}</batch:id>" <<
+                                    '<batch:operation type="update" />' <<
+                                    "<id>#{cellfeed_uri}/#{cell_id}</id>" <<
+                                    '<link href="' << "#{edit_link}" << '" rel="edit" type="application/atom+xml" />' <<
+                                    '<gs:cell col="' << "#{column}" << '" ' << 'inputValue="' << "#{data}" << '" row="' << "#{row}" << '"/>' <<
+                                    '</entry>';
+                      end#fim do each
 
-            batch_request << '</feed>'
+            batch_request << '</feed>' #fim do feed, agora é só postar
+            headers["Content-Type"] = "application/atom+xml"
+            
             return post(batch_uri, batch_request, headers)
    end#fim do metodo
-   
-   
-   #atualiza conteudo da linha
-   def post_feedList
-     @headers["Content-Type"] = "application/atom+xml"
      
-     #adicionar nova linha
-     nova_linha = '<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">' << 
-                        '<gsx:language xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">ruby</gsx:language>' << 
-                        '<gsx:website xmlns:gsx="http://schemas.google.com/spreadsheets/2006/extended">http://ruby-lang.org</gsx:website>' << 
-                   '</atom:entry>';
-                   
-     p nova_linha             
-     post_response = post(@url_feed_list, nova_linha, @headers)
-     p post_response.body
-   end
-   
-   #posta pelo método de cellFeed
-   def post_cellList
-     
-   end#fim do post_cellList
-   
   ##fim da classe GoogleConnect
 end
