@@ -34,8 +34,13 @@ li a, h1 a {display:block; width:100%; text-decoration:none; color:black !import
 /*tela de partida*/
 #partida {font-size:1.5em; text-align:center; widht:100%; margin:0 auto;}
 #tempo {font-size:1.8em;}
-.jogador {float:left; display:block;}
+
+/* classe para cada botão do jogador */
+.jogador {float:left; display:block; position:relative; top:-25px;}
 .jogador:last-child {float:right;}
+.jogador .menospontos, .jogador .maispontos {position:absolute; text-align:center; left:48%; cursor:pointer;}
+.jogador .maispontos {top:-35px;}
+.jogador .menospontos {top:35px;}
 .pontos {margin:0 5px;}
 #jogo {width:100%; clear:both; font-size:1.2em; text-align:center; margin-bottom:10px;}
 #novo_set {width:45%; display:block;clear:both; bottom:0; position:relative; float:left; color:white; background-color:#12ac7b; text-shadow:1px 1px 1px black; text-algin:center;}

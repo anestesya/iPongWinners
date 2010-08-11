@@ -38,9 +38,9 @@ jQuery(function($){
 				  			  '<h1><a href="/'+tipo_partida+'">Voltar</a></h1>'+
 				  			  '<h2><span class="set">1</span> SET</h2>'+
 							  '<p id="tempo"></p>'+
-				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador">'+jogador[0]+'<span class="pontos">0</span></span>'+
+				       		  '<p id="jogo"><span id="'+jogador[0]+'" class="jogador"><span class="maispontos">+</span>'+jogador[0]+'<span class="pontos">0</span><span class="menospontos">-</span></span>'+
 							  '<span class="marcador">X</span>'+
-							  '<span id="'+jogador[1]+'" class="jogador"><span class="pontos">0</span>'+jogador[1]+'</span></p>'+
+							  '<span id="'+jogador[1]+'" class="jogador"><span class="maispontos">+</span><span class="pontos">0</span><span class="menospontos">-</span>'+jogador[1]+'</span></p>'+
 							  '<span id="novo_set">novo set</span><span id="fim_partida">acabou</span>',
 				  tpl_p_fim = '</div>';
 			    
@@ -56,7 +56,8 @@ jQuery(function($){
 				/* Clica no botão de terminar a partida 
 				 *e envia os dados para o ruby
 				 */
-				 var sets_jogadorA = sets_jogadorB = new Array();
+				 var sets_jogadorA = [];
+				 var sets_jogadorB = [];
 				 $('#novo_set, #fim_partida').click(function(){
 					 	var $this = $(this), vencedor, jogador = new Array(2);
 					 	var bt = $this.attr('id'), pontos = new Array(2), set = $('.set').text(), url_score = $('h1 a').attr('href');
@@ -64,50 +65,54 @@ jQuery(function($){
 						//jogadores
 						jogador[0] =  $('#jogo').find('.jogador:eq(0)').text();
 						jogador[1] =  $('#jogo').find('.jogador:eq(1)').text();
-						console.log(jogador[0] + " : "+ jogador[1] );
 						//pontos
 						$('.pontos').each(function(i){ pontos[i] = parseInt($(this).text()); });
 						
 						//verifica o tipo da partida para enviar os dados para a tabela certa.					
-						if(url_score == '/'){ url_score = '/score_single';}
+						if(url_score == '/'){url_score = '/score_single';}
 						else {url_score = '/score_duplas';}
-						
-							//envia os dados direto para o bd.
-							if(pontos[0] > pontos[1]){
-								vencedor = jogador[0];
-								console.log("Vencedor: "+vencedor)
-								sets_jogadorA.push(1);
-								console.log('Sets:'+sets_jogadorA)
-								sets_jogadorB.push(0)	
-								console.log('Sets:'+sets_jogadorB)
-							}else {
-								vencedor = jogador[1];
-								console.log("Vencedor: "+vencedor)
-								sets_jogadorB.push(0)	
-								sets_jogadorA.push(1);
-								console.log('Sets:'+sets_jogadorA)
-								console.log('Sets:'+sets_jogadorB)
+
+							if( !(pontos[0] == 0 && pontos[1] == 0) && pontos[0] != pontos[1] ){
+									if(pontos[0] > pontos[1]){
+										vencedor = jogador[0];
+										sets_jogadorA.push(1);
+										sets_jogadorB.push(0);	
+									}else {
+										vencedor = jogador[1];
+										sets_jogadorA.push(0);
+										sets_jogadorB.push(1);	
+									}
+							 }else {
+								alert('Deu empate, em nosso campeonato não existe empate na partida!');
+								return false;
 							}
 							
 						if(bt == "fim_partida"){
+							var z=0, resultA = 0, resultB = 0;
 							
+							console.log("Sets: "+sets_jogadorA.length);
+							while(z < sets_jogadorA.length){
+								
+								resultA += sets_jogadorA[z]; 
+								resultB += sets_jogadorB[z];
+								z++;
+							}
+							
+							if(resultA > resultB){
+								vencedor = jogador[0];
+							}else {
+								vencedor = jogador[1];
+							}							
+							
+							//envia os dados direto para o bd.
 							$.ajax({
 								url: url_score,
 								type: 'POST',
 								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
-								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1]+'&sets_jogadorA='+sets_jogadorA+'&sets_jogadorB='+sets_jogadorB,
+								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1]+'&sets_jogadorA='+resultA+'&sets_jogadorB='+resultB,
 								success: function(){window.location.href = "/"; sets_jogadorA = sets_jogadorB = 0} //volta para a página index do programa.
 							});//fim do ajax
 						}else{
-							
-							//a partida continua e os dados são apenas armazenados.
-							if( vencedor == jogador[0]){
-								sets_jogadorA.push(1)
-								sets_jogadorB.push(0)	
-							}else if (vencedor == jogador[1]){
-								sets_jogadorB.push(0)
-							   	sets_jogadorA.push(1)
-							}
 							
 							/*$.ajax({
 								url: url_score,
@@ -118,7 +123,7 @@ jQuery(function($){
 										set = parseInt(set)+1;
 										$('.pontos').text('0');
 										$('.set').text(set);
-										mostraHora('#tempo');
+										mostraHora('#tempo').reset();
 								//}
 						    //});//fim do ajax
 						    return false;
@@ -129,10 +134,21 @@ jQuery(function($){
 				/* Atualiza pontuação da partida corrente
 				 * Clique no resultado para alterá-lo
 				 */
-				$('.jogador').click(function(){
-					var ponto = $(this).children().text();
-					ponto = parseInt(ponto);
-					ponto++;
+				$('.maispontos, .menospontos').click(function(){
+					botao = $(this).attr('class');
+					var ponto = (botao == 'menospontos') ? $(this).prev() : $(this).next();
+					ponto = parseInt(ponto.text());
+					if( $(this).attr('class') == 'menospontos'){
+						if(ponto != 0){
+							ponto--;
+							at_pt = $(this).prev();
+                 			at_pt.html(ponto)
+						}
+					}else{
+						ponto++;
+						at_pt = $(this).next();
+                 		at_pt.html(ponto)
+					}
 					$(this).children().html(ponto);
 				});//fim da função que atualiza a pontução.
 				
@@ -147,81 +163,28 @@ jQuery(function($){
  * Funções usadas.
  */
 //Relógio HH:MM:SS (atualiza em tempo real)
+var hora = minutos = segundos = 0;
 function mostraHora(seletor){
-	 		var tempo = new Date();
-	 		var hora, minutos = tempo.getMinutes();
-		    if(minutos < 10) {
-				minutos = "0"+minutos;
+			segundos++;
+			
+			if(segundos > 60){
+				minutos++;
+				segundos =0;
+			} 
+			
+			if(minutos > 60){
+				hora++;
+				minutos = 0;
 			}
-	     	
-			$(seletor).html(tempo.getHours()+":"+minutos+":"+tempo.getSeconds());
+	     				
+			$(seletor).html(hora+":"+minutos+":"+segundos);
 			setTimeout(function(){
-				mostraHora("#tempo");
+				mostraHora(seletor);
 			}, 1000);
+			
+			
+			function reset(){
+				hora = minutos = segundos = 0;
+				$(seletor).html(hora+":"+minutos+":"+segundos);
+			}
 }//fim mostraHora()
-
-var timercount = 0;
-var timestart  = null;
-  
-function sw_start(){
-	if(!timercount){
-	timestart   = new Date();
-	document.timeform.timetextarea.value = "00:00";
-	document.timeform.laptime.value = "";
-	timercount  = setTimeout("mostraHora('#tempo')", 1000);
-	}
-	else{
-	var timeend = new Date();
-		var timedifference = timeend.getTime() - timestart.getTime();
-		timeend.setTime(timedifference);
-		var minutes_passed = timeend.getMinutes();
-		if(minutes_passed < 10){
-			minutes_passed = "0" + minutes_passed;
-		}
-		var seconds_passed = timeend.getSeconds();
-		if(seconds_passed < 10){
-			seconds_passed = "0" + seconds_passed;
-		}
-		var milliseconds_passed = timeend.getMilliseconds();
-		if(milliseconds_passed < 10){
-			milliseconds_passed = "00" + milliseconds_passed;
-		}
-		else if(milliseconds_passed < 100){
-			milliseconds_passed = "0" + milliseconds_passed;
-		}
-		document.timeform.laptime.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
-	}
-}
- 
-function Stop() {
-	if(timercount) {
-		clearTimeout(timercount);
-		timercount  = 0;
-		var timeend = new Date();
-		var timedifference = timeend.getTime() - timestart.getTime();
-		timeend.setTime(timedifference);
-		var minutes_passed = timeend.getMinutes();
-		if(minutes_passed < 10){
-			minutes_passed = "0" + minutes_passed;
-		}
-		var seconds_passed = timeend.getSeconds();
-		if(seconds_passed < 10){
-			seconds_passed = "0" + seconds_passed;
-		}
-		var milliseconds_passed = timeend.getMilliseconds();
-		if(milliseconds_passed < 10){
-			milliseconds_passed = "00" + milliseconds_passed;
-		}
-		else if(milliseconds_passed < 100){
-			milliseconds_passed = "0" + milliseconds_passed;
-		}
-		document.timeform.timetextarea.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
-	}
-	timestart = null;
-}
- 
-function Reset() {
-	timestart = null;
-	document.timeform.timetextarea.value = "00:00";
-	document.timeform.laptime.value = "";
-}

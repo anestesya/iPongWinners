@@ -131,7 +131,12 @@ get '/score_single' do
 end
 
 post '/score_single' do
-  p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} Sets do Jogador A: #{params[:sets_jogadorA]}, Sets do Jogador B: #{params[:sets_jogadorB]}"
+  if params[:sets_jogadorA] > params[:sets_jogadorB]
+    p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} | #{params[:sets_jogadorA]} X #{params[:sets_jogadorB]}"
+  else
+    p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} | #{params[:sets_jogadorB]} X #{params[:sets_jogadorA]}"
+  end
+     
   "<h1>SCORE</h1>"
   #erb :score_single
 end
