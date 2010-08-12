@@ -113,19 +113,10 @@ jQuery(function($){
 								success: function(){window.location.href = "/"; sets_jogadorA = sets_jogadorB = 0} //volta para a página index do programa.
 							});//fim do ajax
 						}else{
-							
-							/*$.ajax({
-								url: url_score,
-								type: 'POST',
-								data: 'set='+set+'&jogador_a='+jogador[0]+'&jogador_b='+jogador[1]+'&vencedor='+vencedor+'&tempo='+$('#tempo').text()+
-								      '&pnt_jogador_a='+pontos[0]+'&pnt_jogador_b='+pontos[1],
-								success: function(){*/
-										set = parseInt(set)+1;
-										$('.pontos').text('0');
-										$('.set').text(set);
-										mostraHora('#tempo').reset();
-								//}
-						    //});//fim do ajax
+							set = parseInt(set)+1;
+							$('.pontos').text('0');
+							$('.set').text(set);
+							horaReset("#tempo");
 						    return false;
 					   	}//fim dos testes
 				   });//fim do evento de clique nos botões "novo set" & "fim_partida"
@@ -165,26 +156,40 @@ jQuery(function($){
 //Relógio HH:MM:SS (atualiza em tempo real)
 var hora = minutos = segundos = 0;
 function mostraHora(seletor){
-			segundos++;
-			
-			if(segundos > 60){
-				minutos++;
-				segundos =0;
-			} 
-			
-			if(minutos > 60){
-				hora++;
-				minutos = 0;
-			}
-	     				
-			$(seletor).html(hora+":"+minutos+":"+segundos);
-			setTimeout(function(){
-				mostraHora(seletor);
-			}, 1000);
-			
-			
-			function reset(){
-				hora = minutos = segundos = 0;
-				$(seletor).html(hora+":"+minutos+":"+segundos);
-			}
+		segundos++;
+		
+		if(segundos > 60){
+			minutos++;
+			segundos =0;
+		} 
+		
+		if(minutos > 60){
+			hora++;
+			minutos = 0;
+		}
+     				
+		$(seletor).html(hora+":"+minutos+":"+segundos);
+		if(segundos < 10 && minutos < 10)
+   		 {
+        	$(seletor).html("0" + hora + ":0" + minutos + ":0" + segundos);
+    	}
+    	else if(segundos > 9 && minutos < 10)
+    	{
+       		 $(seletor).html("0" + hora + ":0" + minutos + ":" + segundos);
+    	}
+    	else if(segundos < 10 && minutos > 9)
+    	{
+			 $(seletor).html("0" + hora + ":" + minutos + ":0" + segundos);
+		}
+        
+		setTimeout(function(){
+			mostraHora(seletor);
+		}, 1000);
+		
 }//fim mostraHora()
+
+
+function horaReset(seletor){
+	hora = minutos = segundos = 0;
+	$(seletor).html("00:00:00");
+}

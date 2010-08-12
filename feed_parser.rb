@@ -86,9 +86,9 @@ class FeedParser
      #se tiver alguma opção ele retorna as duplas
       p "Opcao: #{opcao.empty?}"
      unless opcao.empty?
-	@duplas
+	       @duplas
      else
-	@users
+	       @users
      end
   end
 

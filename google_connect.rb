@@ -108,8 +108,8 @@ class GoogleConnect
    
    
    #Atualiza por Bacth várias celulas atualizadas de uma unica chamada.
-   def batch_update(batch_data, cellfeed_uri, headers)
-     
+   def batch_update(batch_data, cellfeed_uri)
+        headers = @headers
         batch_uri = cellfeed_uri+"/batch"
         
         #cria pedaço do feed para ser atualizado
