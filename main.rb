@@ -87,9 +87,9 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
  end#fim do método de iniciar
 
 
-###################################################################################
-###### SERVER #####################################################################
-###################################################################################
+###############################################################################
+###### SERVER #################################################################
+###############################################################################
 #página index.
 get '/' do
    #se não existe feed, não existe informação
@@ -131,25 +131,33 @@ get '/score_single' do
 end
 
 post '/score_single' do
-  if params[:sets_jogadorA] > params[:sets_jogadorB]
-    p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} | #{params[:sets_jogadorA]} X #{params[:sets_jogadorB]}"
-    init
-    feed = $gc.get_sheets
-    
-     #atualiza via feeds
-      dados_a_serem_atualizados = [ {:batch_id => 'A1', :cell_id => 'R6C10', :data => '50'}]
-      update_uri = feed.get_uri_to_update
-      
-      rsp = $gc.batch_update(dados_a_serem_atualizados, update_uri)
+    vencedor = params[:vencedor].gsub /[0-9]\-/, ""
+    vencedor = vencedor.gsub /^( )*/, ""
+    vencedor = vencedor.upcase
+    if vencedor == "TADEU"
+            dados_a_serem_atualizados = [ {:batch_id => 'A1', :cell_id => 'R6C10', :data => '2'}]
+             #atualiza via feeds
+            init
+            feed = $gc.get_sheets
+            update_uri = feed.get_uri_to_update
+            rsp = $gc.batch_update(dados_a_serem_atualizados, update_uri)
+            p "Resultado da atualizacao dos dados: #{rsp}"
+            
+            
+    elsif vencedor == "LUIS GUSTAVO"
+            dados_a_serem_atualizados = [ {:batch_id => 'A2', :cell_id => 'R4C10', :data => '3'}]
+             #atualiza via feeds
+            init
+            feed = $gc.get_sheets
+            update_uri = feed.get_uri_to_update
+            rsp = $gc.batch_update(dados_a_serem_atualizados, update_uri)
+            p "Resultado da atualizacao dos dados: #{rsp}"
+    end
+  
+            feed = $gc.get_sheets
+            @pontuacao = feed.get_pontos
      
-      p "Resultado da atualizacao dos dados: #{rsp}"
-      pp rsp.body
-  else
-    p "Vencedor: #{params[:vencedor]} | Tempo da partida: #{params[:tempo]} | #{params[:sets_jogadorB]} X #{params[:sets_jogadorA]}"
-  end
-     
-  "<h1>SCORE</h1>"
-  #erb :score_single
+   erb :score_single
 end
 
 

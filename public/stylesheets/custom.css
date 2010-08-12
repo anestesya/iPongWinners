@@ -1,8 +1,8 @@
 * {margin:0; padding:0;}
 body {
   margin:0 auto; 
-  background:url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong02.jpg) no-repeat 2.5em left, 
-  url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong01.jpg) no-repeat 25em right;
+  /*background:url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong02.jpg) no-repeat 2.5em left, 
+  url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong01.jpg) no-repeat 25em right;*/
 }
 
 h1 {  
@@ -38,8 +38,8 @@ li a, h1 a {display:block; width:100%; text-decoration:none; color:black !import
 /* classe para cada botão do jogador */
 .jogador {float:left; display:block; position:relative; top:-25px;}
 .jogador:last-child {float:right;}
-.jogador .menospontos, .jogador .maispontos {position:absolute; text-align:center; left:48%; cursor:pointer;}
-.jogador .maispontos {top:-35px;}
+.jogador .menospontos, .jogador .maispontos {position:absolute; text-align:center; left:48%; cursor:pointer; width:50px;}
+.jogador .maispontos {top:-50px; border-radius: 3px; border:2px solid green; background-color:yellow; color:red;}
 .jogador .menospontos {top:35px;}
 .pontos {margin:0 5px;}
 #jogo {width:100%; clear:both; font-size:1.2em; text-align:center; margin-bottom:10px;}

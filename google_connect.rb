@@ -71,14 +71,6 @@ class GoogleConnect
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
        
-      #atualiza via feeds
-      #dados_a_serem_atualizados = [ {:batch_id => 'A1', :cell_id => 'R6C11', :data => '50'}]
-      #update_uri = @n_p.get_uri_to_update
-      
-      #rsp = batch_update(dados_a_serem_atualizados, update_uri, @headers)
-     
-      #p "Resultado da atualizacao dos dados: #{rsp}"
-      #pp rsp.body
       @n_p
    end 
    
