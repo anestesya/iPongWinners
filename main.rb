@@ -157,7 +157,7 @@ post '/score_single' do
             feed = $gc.get_sheets
             @pontuacao = feed.get_pontos
      
-   erb :score_single
+   #erb :score_single
 end
 
 
