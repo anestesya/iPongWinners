@@ -1,0 +1,171 @@
+== 1.0.3
+
+- JRUBY-4892: Fix IO collapsing \r\n to \n on Windows
+- Fix setting of relative_url_root in Rails 3
+- Recognize META-INF/init.rb and WEB-INF/init.rb as init scripts.
+
+== 1.0.2
+
+- Upgrade to Rack 1.2.1 (required for Rails 3 RC)
+- Retain any GEM_PATH that's set in the environment
+- Fixed XML Schema Location definition for jsptaglib for JBoss 6
+  (NAKAMURA Hiroshi)
+- JRUBY_RACK-33: Fix RackFilter to only append .html to path info if
+  the resource exists (thanks Patrick Cheng)
+
+== 1.0.1
+
+- 1.0.0 release had a packaging snafu. Too many releases in too short a timespan
+
+== 1.0.0
+
+- Might as well go to 1.0. We've been used in production code for a
+  while now.
+- Turns out the LoadError path dumping is pretty annoying. Rearrange
+  the code and have it only activated by 'jruby.rack.debug.load'.
+
+== 0.9.9
+
+- 0.9.8 broke Rubygem's custom require
+
+== 0.9.8
+
+- Look for config.ru in either WEB-INF/config.ru or
+  WEB-INF/*/config.ru and use it for racking up the application.
+  'rackup' context parameter is still supported for embedding in
+  web.xml too.
+- JRUBY_RACK-21: Add logging adapter classes for commons-logging and
+  slf4j. If you use either of these logging frameworks in your app,
+  simply set 'jruby.rack.logging' to 'clogging' or 'slf4j' in either
+  web.xml as a context parameter or as a system property to pipe Ruby
+  logs through those frameworks (h/t jcantrill).
+- Fix bug with RackRewindableInput#read(N) -- should return nil when finished
+- Fix Rails 3 logger configuration
+- Only load vendor/rack if Rack is not already loaded
+
+== 0.9.7
+
+- Rails 3 support
+- Fix "overrides final method getRuntime" error due to 1.5 Java class
+  generation changes
+- Upgrade to Rack 1.1.0
+- Upgrade to servlet 2.5 and jsp 2.1
+- Fix SCRIPT_NAME/PATH_INFO overlap issue with context paths (seen on
+  GAE and elsewhere)
+- JRUBY_RACK-8:  adjust LOAD_PATH if jruby_home detection failed in the current environment
+- JRUBY_RACK-23: JavaServletStore needs to be required before it can be set as the session store
+- JRUBY_RACK-26: Rack crashes on multipart/form-data bodies submitted with curl (or other headless client)
+- JRUBY_RACK-27: Rails.public_path has a trailing /
+- JRUBY_RACK-29: Incorrectly Bundling jruby-rack-0.0.7.SNAPSHOT.jar
+- JRUBY_RACK-19: Add a jruby-rack gem for finding the jar file
+- JRUBY_RACK-24: Support non-war deployment of Rails apps
+
+== 0.9.6
+
+- JRUBY_RACK-22: Ensure we call #close on the body per the Rack spec.
+- Set jruby.management.enabled true when creating a runtime. JRuby 1.5
+  will default this flag to false, but you probably still want JMX
+  capability inside an appserver.
+- Miscellaneous spec cleanup due to changes in JRuby 1.5
+
+== 0.9.5
+
+- Upgrade to Rack 1.0.0. However, if you supply Rack in your
+  application (either via rubygems or by vendoring it), it will take
+  precedence -- JRuby-Rack's bundled copy is only loaded as a
+  fallback. This allows you to upgrade Rack without having to wait for
+  a new JRuby-Rack release.
+- Implement Rack-based java servlet session mechanism. You'll have to
+  turn on java servlet sessions by setting
+    ActionController::Base.session_store = :java_servlet_store
+  in your config/initializers/session_store.rb.
+- JRUBY_RACK-7: Implement a rewindable 'rack.input' shim between the
+  servlet input stream and the Rack environment. Below a certain
+  byte-size threshold, the input is entirely buffered in memory. Above
+  the threshold, the input is written to a tempfile. The default
+  threshold is 64k, and can be controlled by the system property
+  'jruby.rack.request.size.threshold.bytes'.
+- The previous non-rewindable input behavior can be re-instated by
+  setting the system property 'jruby.rack.input.rewindable' to false.
+  Despite being out of spec, environments such as Google AppEngine
+  require this behavior because writing to a tempfile is not possible.
+- JRUBY_RACK-4: deal with threading and to_io by assigning IO object
+  to an instance variable instead of defining a singleton method on
+  the metaclass/singleton class
+- JRUBY_RACK-17: Fix SCRIPT_NAME/PATH_INFO in root context (Chris
+  Read)
+- JRUBY_RACK-10, JRUBY_RACK-15: Fix request channel read issue w/
+  POSTs and multiparts (Michael Pitman, Lenny Marks)
+- JRUBY_RACK-14: Override both Servlet service methods (Michael
+  Pitman)
+
+== 0.9.4
+
+- PLEASE NOTE: Prior to 0.9.4, jruby-rack would try to use the java
+  servlet session store by default. This caused more confusion than
+  it's worth; so the default Rails cookie session store has been
+  reinstated for this release.
+- Upgrade bundled Rack version to 0.9.1
+- Introduce RackLogger, defaults to log to servlet context but can be
+  made to point to stdout by setting -Djruby.rack.logging=stdout (for
+  Google AppEngine)
+- Detect Rails 2.3 rack machinery and dispatch to it rather than the
+  legacy CGI shim.
+- TODO: Still missing a java servlet Rack::Session adapter for Rails
+  2.3. Should have it for next release.
+- Update example Rails application to Rails 2.3.2, include bits for
+  deployment to Google AppEngine using Warbler.
+- RackApplication-related core Java classes have been insulated from
+  the servlet API, so that (parts of) JRuby-Rack can be used outside
+  of a servlet container. If your application or library is coupled to
+  these classes, you'll likely be broken with this release. See Nick
+  for details.
+- Fix TLD to be more compatible (Fred McHale).
+- Switched main code repository to kenai.com. Github.com still
+  available as a mirror and for forking.
+- EXPERIMENTAL: Beginnings of a JMS API (more details to come)
+- REMOVAL: All the goldspike compatibility bits have been removed. You
+  should upgrade your application to use a web.xml similar to what
+  comes with Warbler.
+
+== 0.9.3
+
+- Merb updates for 1.0 compatibility
+- Patch race condition in runtime pooling that allowed more than max
+  number of runtimes
+- Fix bug with backref interpretation and windows paths
+- JRUBY-2908: Add fallback for when servletContext.getRealPath doesn't
+  work (Joern Hartmann)
+- Add extra prevention to ensure that IO descriptor keys do not leak in
+  the runtime's cache of descriptors (see also JRUBY-3185)
+- Switched to dual rake/maven build process
+- Switched main code repository to github (for now)
+
+== 0.9.2
+
+- Upgrade to Rack 0.4.0
+- Only chdir at startup when the /WEB-INF directory exists (fix for jetty-rails)
+- Fix typos in rails tag tld
+- Add getRuntime to RackApplication for use by non-web embedded applications
+- Use a shared application factory for Rails if max runtimes == 1 (to support multi-threaded Rails)
+- Change from jruby.initial.runtimes to jruby.min.runtimes to be consistent w/ Warbler
+
+== 0.9.1
+
+- Change each runtime's notion of current directory to /WEB-INF, so you can do
+  loads and requires relative to WEB-INF
+- JRUBY-2507: Update Rails boot override to not pre-load action_controller
+- Don't assume or set cache_template_loading to true, rely on Rails to do it for us
+- Set ENV['HTTPS'] = 'on' for Rails depending on servlet request scheme (Lenny Marks)
+- Fix request URI -- must include query string
+- Updated to be built and tested against JRuby 1.1.3
+- Ensure that gem environment is set up for plain rack apps too
+- JRUBY-2594: Fix URI-escaping issue (e.g., when spaces are in the path)
+- Make use of 'Rails.public_path' in Rails 2.1
+- JRUBY-2620: Fix issue with non-string headers
+- Support integer and date headers directly
+- Examples: Rails updated to 2.1, Camping and Sinatra examples added/working
+
+== 0.9
+
+- First public release.

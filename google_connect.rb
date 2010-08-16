@@ -1,12 +1,15 @@
 #classe em ruby para conectar no google spreadsheet
 #autor: tadeu luis anestesya@gmail.com
-require 'xmlsimple'
+#require 'xmlsimple'
 require 'net/https'
+require 'appengine-apis/urlfetch'
 require 'feed_parser'
 require 'rexml/document'
 require 'pp'
 
 class GoogleConnect
+     
+  Net::HTTP = AppEngine::URLFetch::HTTP
   
   #CONSTANTES UTILIZADA NAS CONEXÔES
   GOOGLE_URL = 'www.google.com'
@@ -29,7 +32,6 @@ class GoogleConnect
      #monta dados enviados no POST
      meus_dados = 'accountType=HOSTED_OR_GOOGLE&Email=' << @user << '&Passwd='<< @password << '&service=' << @service
      @headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
-     
       #faz requisição de autenticação
       @http = Net::HTTP.new(GOOGLE_URL, GOOGLE_SSL_PORT)
       @http.use_ssl = true

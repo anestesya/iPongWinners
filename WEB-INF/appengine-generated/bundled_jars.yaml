@@ -1,0 +1,10 @@
+--- 
+- jopenssl.jar
+- appengine-rack.jar
+- jruby-rack-1.0.3.jar
+- jruby-stdlib-1.5.1.jar
+- jruby-core-1.5.1.jar
+- bcprov-jdk15-145.jar
+- bcmail-jdk15-145.jar
+- appengine-api-labs-1.3.5.jar
+- appengine-api-1.0-sdk-1.3.5.jar
