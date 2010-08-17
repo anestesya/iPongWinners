@@ -5,6 +5,7 @@
 
 require 'rubygems'
 require 'sinatra'
+require 'datamodel'
 require 'pp'
 
 #libs do programa
@@ -60,6 +61,7 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
         init #inicializa conexão com o google
         feed = $gc.get_sheets
         
+        #usar data mapper para poder armazenar arquivos no sistema do GAE(google app engine)
         novo_feed = File.new $feed_path, "wb"
         p "#{$feed_path}:                                      [OK]"
         novo_feed.puts feed.get_doc
@@ -94,7 +96,7 @@ $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
 get '/' do
    #se não existe feed, não existe informação
    #então inicializar a coneção com o Google.
-   verifica_criacao_arquivos
+   #verifica_criacao_arquivos
    erb :index
 end
 

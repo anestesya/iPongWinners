@@ -4,13 +4,10 @@
 require 'rubygems'
 require 'xmlsimple'
 require 'pp' #Import module 'pp' para 'pretty printing'
+require 'datamodel'
 
 class FeedParser
   def initialize(documento)
-    #p "Vamos criar um xml para ser visto."
-    #potas = File.new "#{ENV['PWD']}/cellFeed.xml", "wb" 
-    #potas.puts documento.body
-    #potas.close
     @doc= XmlSimple.xml_in(documento.body, 'KeyAttr' => 'name')
   end
   

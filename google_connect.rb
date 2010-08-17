@@ -3,12 +3,15 @@
 #require 'xmlsimple'
 require 'net/https'
 require 'appengine-apis/urlfetch'
-require 'feed_parser'
 require 'rexml/document'
 require 'pp'
 
+#classes locais minhas
+require 'feed_parser'
+require 'datamodel'
+
 class GoogleConnect
-     
+  #declara a variável constante para a lib net utilizada pelo gogle app engine   
   Net::HTTP = AppEngine::URLFetch::HTTP
   
   #CONSTANTES UTILIZADA NAS CONEXÔES
@@ -65,14 +68,23 @@ class GoogleConnect
       chave = feed.get_spreadsheet_key
       uri_planilha = "http://spreadsheets.google.com/feeds/worksheets/#{chave}/private/full"
       pp "URI: #{uri_planilha}"
-      planilha = get_feed(uri_planilha, @headers)
-      planilha = FeedParser.new planilha
+      planilha_doc = get_feed(uri_planilha, @headers)
+      planilha_doc = FeedParser.new planilha
       
+      #cria um resourse seguindo o 'datamodel'
+      @dt_planilha = Planilha.create(
+          :planilha_id => chave,
+          :planilha_uri => uri_planilha,
+          :planilha_conteudo => planilha.body
+      )
+      
+      @dt_planilha.save
+            
       #pega a planilha iPongWinners  
-      @url_feed_list = planilha.get_url_feed "cellFeed"
+      @url_feed_list = planilha_doc.get_url_feed "cellFeed"
       @n_p = get_feed(@url_feed_list, @headers)
       @n_p = FeedParser.new @n_p
-       
+      
       @n_p
    end 
    
