@@ -9,13 +9,14 @@ require 'dm-core'
 #Configura a gem DataMapper para usar o sistema de armazenamendo App Engine
 DataMapper::Logger.new($stdout, :debug)
 DataMapper.setup(:default, "appengine://auto")
+DataMapper::Model.raise_on_save_failure = true
 
 class Planilha
   include DataMapper::Resource
   
-  property :planilha_id,        String
-  property :plainlha_uri,       String
-  property :planilha_timestamp, String
+  property :planilha_id,        Serial
+  property :planilha_uri,       String
+  property :planilha_timestamp, Time
   property :planilha_conteudo,  Text
   
 end#fim da classe Planilha

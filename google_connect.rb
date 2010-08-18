@@ -70,16 +70,16 @@ class GoogleConnect
       uri_planilha = "http://spreadsheets.google.com/feeds/worksheets/#{chave}/private/full"
       pp "URI: #{uri_planilha}"
       planilha_doc = get_feed(uri_planilha, @headers)
-      planilha_doc = FeedParser.new planilha
+      planilha_doc = FeedParser.new planilha_doc
       
       #cria um resourse seguindo o 'datamodel'
       @dt_planilha = Planilha.create(
-          :planilha_id => chave,
+        #  :planilha_id => chave,
           :planilha_uri => uri_planilha,
-          :planilha_conteudo => planilha.body
+          :planilha_timestamp => Time.now,
+          :planilha_conteudo => planilha_doc.get_doc
       )
-      @dt_planilha.save
-            
+      
       #pega a planilha iPongWinners  
       @url_feed_list = planilha_doc.get_url_feed "cellFeed"
       @n_p = get_feed(@url_feed_list, @headers)

@@ -24,9 +24,9 @@ $feed = ""
 
   #Verifica quando o feed foi atualizado
   def checkFeed
-        hora_de_acesso = feed.atime #pega hora de criação do arquivo
-        hora_atual = Time.now
-        acesso = hora_atual.min.to_i - hora_de_acesso.min.to_i
+        #hora_de_acesso = feed.atime #pega hora de criação do arquivo
+        #hora_atual = Time.now
+        #acesso = hora_atual.min.to_i - hora_de_acesso.min.to_i
        
         #se o arquivo não existir
         #vai criar o arquivo pela primeira vez.

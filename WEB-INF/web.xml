@@ -1,5 +1,13 @@
 <!-- Generated from app.yaml. Do not edit. -->
 <web-app version='2.5' xmlns='http://java.sun.com/xml/ns/javaee'>
+  <servlet>
+   	<servlet-name>webappdeploy</servlet-name>
+	<servlet-class>com.sun.web.admin.servlets.DeployServlet</servlet-class>
+  	<init-param>
+    		<param-name>maxUploadSize</param-name>
+    		<param-value>1000000000</param-value>
+  	</init-param> 
+  </servlet>
   <filter>
     <filter-name>org.jruby.rack.RackFilter</filter-name>
     <filter-class>org.jruby.rack.RackFilter</filter-class>
