@@ -12,8 +12,6 @@ require 'pp'
 require 'jogadores'
 require 'google_connect'
 
-DIR_XML_FILES = "public/files/xml/"
-
 #variável global com os jogadores
 $feed = ""; $feed_path = DIR_XML_FILES+"feed.xml";
 
