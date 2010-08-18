@@ -4,7 +4,9 @@
 require 'rubygems'
 require 'xmlsimple'
 require 'pp' #Import module 'pp' para 'pretty printing'
-require 'datamodel'
+require 'dm-core'
+
+require 'model'
 
 class FeedParser
   def initialize(documento)

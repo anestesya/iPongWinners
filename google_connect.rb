@@ -8,7 +8,8 @@ require 'pp'
 
 #classes locais minhas
 require 'feed_parser'
-require 'datamodel'
+require 'dm-core'
+require 'model'
 
 class GoogleConnect
   #declara a variável constante para a lib net utilizada pelo gogle app engine   
@@ -77,7 +78,6 @@ class GoogleConnect
           :planilha_uri => uri_planilha,
           :planilha_conteudo => planilha.body
       )
-      
       @dt_planilha.save
             
       #pega a planilha iPongWinners  

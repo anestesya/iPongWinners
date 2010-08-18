@@ -13,14 +13,17 @@ DataMapper.setup(:default, "appengine://auto")
 class Planilha
   include DataMapper::Resource
   
-  property :planilha_id,       String
-  property :plainlha_uri,      String
-  property :planilha_conteudo, Text
+  property :planilha_id,        String
+  property :plainlha_uri,       String
+  property :planilha_timestamp, String
+  property :planilha_conteudo,  Text
   
 end#fim da classe Planilha
 
 class Usuario
   include DataMapper::Resource
+  
+  has n, :partidas
   
   property :user_id,      Integer
   property :user_name,    String
@@ -42,15 +45,14 @@ class Partida
   property :partida_tempos,      String
   property :partida_duracao,     Time
   property :partida_resultado,   String
+  belongs_to :usuario
   
 end#fim da classe partida
 
-class Tempos 
-  include DataMapper:Resource
+class Tempo 
+  include DataMapper::Resource
   belongs_to :partida #significa que pode-se ter varias clases dessa na partida
   property :tempos_id,       String #essa chave deve ser formada 
                                     #partida_id.partida_tima_a.partida_time_b.id_deste_tempo
   property :tempos_duracao,  Time
 end#fim da classe tempos
-
-DataMapper.finalize
