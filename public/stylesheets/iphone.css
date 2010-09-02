@@ -1,0 +1,13 @@
+body {
+	/* estilo pego direto do livro de desenvolvimento do iPhone. */
+ 	background-color: #ddd; /* Background color */
+	color: #222; /* Foreground color used for text */
+	font-family: Helvetica;
+	font-size: 14px;
+	margin: 0; /* Amount of negative space around the outside of the body */
+	padding: 0; /* Amount of negative space around the inside of the body */
+}
+
+/* PÁGINAS */
+/* Página Inicial com o menu de opções */
+.menu_inicial {background:#fff url(../images/lt_inicial.png) no-repeat top left scroll; width:100%; height:100%;}
