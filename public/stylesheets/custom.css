@@ -1,8 +1,12 @@
 * {margin:0; padding:0;}
 body {
-  margin:0 auto; 
-  /*background:url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong02.jpg) no-repeat 2.5em left, 
-  url(http://www.colormegood.com/colormegoodPDFthumbnails/sports/tabletennispingpong/pingpong01.jpg) no-repeat 25em right;*/
+	/* estilo pego direto do livro de desenvolvimento do iPhone. */
+ 	background-color: #ddd; /* Background color */
+	color: #222; /* Foreground color used for text */
+	font-family: Helvetica;
+	font-size: 14px;
+	margin: 0; /* Amount of negative space around the outside of the body */
+	padding: 0; /* Amount of negative space around the inside of the body */
 }
 
 h1 {  

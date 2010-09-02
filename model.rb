@@ -26,10 +26,10 @@ class Usuario
   
   has n, :partidas
   
-  property :user_id,      Integer
-  property :user_name,    String
-  property :user_email,   String
-  property :user_twitter, String
+  property :id,      Serial
+  property :nome,   String
+  property :email,  String
+  property :twitter, String
   
 end#fim da classe usuario
 

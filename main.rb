@@ -62,7 +62,7 @@ $feed = ""
 ###############################################################################
 #página index.
 get '/' do
-   checkFeed
+   #checkFeed
    erb :index
 end
 
